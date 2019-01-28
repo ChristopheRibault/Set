@@ -14,16 +14,19 @@ class GameTools extends Component {
 
   render() {
     const { playerNames } = this.props;
-    const { playingTime } = this.state;
+    const { playingTime, playerNamePlaying } = this.state;
     // console.log("gametools", this.props.numberOfPlayers, this.props.playerNames)
     // console.log("playerNamePlaying", this.state.playerNamePlaying)
     return (
-      playerNames.map((player)=>{
+      <div>
+      {playerNames.map((player)=>{
         return(
       <div>
-        {player} <button onClick={this.getNamePlayerPlaying} className={playingTime ? "disabled" : "active"} name={player}>SET !</button>
+        {player.player}: {player.name} <button onClick={this.getNamePlayerPlaying} className={playingTime ? "disabled" : "active"} name={player.name}>SET !</button>
       </div>
-      )})
+      )})}
+      {playingTime && <div>{playerNamePlaying} is playing !</div>}
+      </div>
     )
   }
 }
