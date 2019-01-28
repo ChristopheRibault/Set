@@ -1,0 +1,45 @@
+
+state = {
+    selectedCards: [],
+}
+
+goodSet : [
+    {shapes: losange, colors: purple, fillings: empty, quantities: 1},
+    {shapes: knacki, colors: purple, fillings: empty, quantities: 2},
+    {shapes: cacahuète, colors: purple, fillings: empty, quantities: 3}
+];
+
+wrongSet : [
+    {shapes: cacahuète, colors: red, fillings: stripes, quantities: 1},
+    {shapes: losange, colors: red, fillings: empty, quantities: 3},
+    {shapes: cacahuète, colors: red, fillings: full, quantities: 3}
+];
+
+pour chaque carte dans goodSet
+    si 
+
+
+SI goodSet[0].shapes === goodSet[1].shapes ET goodSet[0].shapes === goodSet[2].shapes ET goodSet[1].shapes === goodSet[2].shapes
+    OU goodSet[0].shapes !== goodSet[1].shapes ET goodSet[0].shapes !== goodSet[2].shapes ET goodSet[1].shapes !== goodSet[2].shapes
+
+    passe à l'attribut colors
+
+        SI goodSet[0].colors === goodSet[1].colors ET goodSet[0].colors === goodSet[2].colors ET goodSet[1].colors === goodSet[2].colors
+            OU goodSet[0].colors !== goodSet[1].colors ET goodSet[0].colors !== goodSet[2].colors ET goodSet[1].colors !== goodSet[2].colors
+
+                SI goodSet[0].fillings === goodSet[1].fillings ET goodSet[0].fillings === goodSet[2].fillings ET goodSet[1].fillings === goodSet[2].fillings
+                    OU goodSet[0].fillings !== goodSet[1].fillings ET goodSet[0].fillings !== goodSet[2].fillings ET goodSet[1].fillings !== goodSet[2].fillings
+                    
+                        SI goodSet[0].quantities === goodSet[1].quantities ET goodSet[0].quantities === goodSet[2].quantities ET goodSet[1].quantities === goodSet[2].quantities
+                            OU goodSet[0].quantities !== goodSet[1].quantities ET goodSet[0].quantities !== goodSet[2].quantities ET goodSet[1].quantities !== goodSet[2].quantities
+                   
+                                SET !
+
+
+
+SINON GFY
+
+const shapes = ['losange', 'cacahuète', 'knacki'];
+const colors = ['red', 'green', 'purple'];
+const fillings = ['full', 'stripes', 'empty'];
+const quantities = [1, 2, 3];

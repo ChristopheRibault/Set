@@ -8,7 +8,6 @@ export default class Card extends Component {
   render() {
     const { card } = this.props;
     const array = [];
-    console.log(card);
     for (let i = 0; i < card.quantity; i++){
       array[i] = 1;
     }

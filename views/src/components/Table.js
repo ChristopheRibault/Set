@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "./Card";
 
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -14,9 +16,6 @@ const styles = theme => ({
 
 const Table = (props) => {
   const {recordValue, classes, gameCards} = props;  
-
-  // console.log('gameCards : ', gameCards);
-  // console.log(recordValue);
   
   return (
     <div>
@@ -24,9 +23,9 @@ const Table = (props) => {
         {gameCards && gameCards.map(card => {
           return (
             <Grid key={card.code} item xs={3}>
-              <p>{card.code}</p>
-              <button onClick={() => recordValue(card)}>Click !</button>
-              <Card card={card}/>
+              <a onClick={() => recordValue(card)}>
+                <Card card={card} />
+              </a>
             </Grid>
           );
         })}

@@ -38,7 +38,6 @@ class GamePage extends Component {
 
   recordValue = async card => {
     const { selectedCards } = this.state;
-    console.log(card);
 
     selectedCards.push(card);
 		await this.setState({ selectedCards });
@@ -48,7 +47,7 @@ class GamePage extends Component {
         cards: this.state.selectedCards
 			});
 
-      if (!res.data) {
+      if (res.data) {
         this.removeThreeCards()
         this.giveMeThreeCards()
         console.log('set !')
