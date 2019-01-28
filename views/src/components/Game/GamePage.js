@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Table from "./Table";
-import AddThreeCards from "./AddThreeCards";
+import GameTools from "./GameTools";
 
 class GamePage extends Component {
   state = {
@@ -19,6 +19,13 @@ class GamePage extends Component {
     this.setState({ gameCards: twelve });
   }
 
+  selectThreeCards = async (card) => {
+    const { selectedCards } = this.state;
+    console.log(card);
+    selectedCards.push(card);
+    await this.setState({ selectedCards });
+  }
+
   removeThreeCards = () => {
     for (let i = 0; i < 3; i++) {
       const selectCardsCode = object => {
@@ -30,25 +37,21 @@ class GamePage extends Component {
   };
 
   giveMeThreeCards = () => {
-    if (this.state.gameCards.length < 12) {
       const three = this.state.allCards.splice(0, 3);
       this.state.gameCards.push(three[0], three[1], three[2]);
       this.setState({ gameCards: this.state.gameCards });
-    }
+    // }
   };
 
   recordValue = async card => {
-    const { selectedCards } = this.state;
-    console.log(card);
-    selectedCards.push(card);
-    await this.setState({ selectedCards });
+    this.selectThreeCards(card)
 
     if (this.state.selectedCards.length === 3) {
       const res = await axios.post("http://localhost:5000/checkSet", {
         cards: this.state.selectedCards
       });
 
-      if (res.data) {
+      if (res.data && this.state.gameCards.length < 13) {
         this.removeThreeCards();
         this.giveMeThreeCards();
         console.log("set !");
@@ -64,12 +67,17 @@ class GamePage extends Component {
     console.log(`Il reste ${set.data.quantityOfSets} set. Voulez-vous vraiment ajouter des cartes ?`);
   }
 
+  addThreeCards = () => {
+    this.checkGame();
+  }
+
+
   render() {
     const { gameCards } = this.state;
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
-        <AddThreeCards checkGame={this.checkGame} />
+        <GameTools addThreeCards={this.addThreeCards} />
         <button onClick={this.checkGame}>Check cards</button>
       </div>
     );

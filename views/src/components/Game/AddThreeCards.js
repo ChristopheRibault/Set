@@ -13,11 +13,11 @@ const styles = theme => ({
 });
 
 const AddThreeCards = (props) => {
-  const {checkGame, classes, gameCards} = props;  
+  const { addThreeCards } = props;  
   
   return (
     <div>
-      <button onClick={checkGame}>Add three cards</button>
+      <button onClick={addThreeCards}>Add three cards</button>
     </div>
   );
 };
