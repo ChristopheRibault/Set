@@ -54,6 +54,7 @@ class GamePage extends Component {
 	}
 
   render() {
+    console.log('helllo', this.props.location.props.numberOfPlayers)
     const { gameCards } = this.state;
     return gameCards.map((card, index) => {
       return (
