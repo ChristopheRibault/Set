@@ -26,8 +26,8 @@ class GamePage extends Component {
       const res = await axios.post("http://localhost:5000/checkSet", {
         cards: this.state.selectedCards
       });
-      if (res.data) {
-        const { gameCards } = this.state;
+      if (!res.data) {
+				const { gameCards, allCards } = this.state;
 
         for (let i = 0; i < 3; i++) {
           const selectedCardsCode = object => {
@@ -35,19 +35,24 @@ class GamePage extends Component {
           };
           const gameCardIndex = gameCards.findIndex(selectedCardsCode)
           gameCards.splice(gameCardIndex, 1);
-        }
-      }
-      this.setState({ selectedCards: [] });
-    }
-  };
+				}
+				if(this.state.gameCards.length < 12){
+					const three = allCards.splice(0,3)
+					console.log('three', three)
+					this.state.gameCards.push(three[0], three[1], three[2])
+					this.setState({gameCards})
+				}
+			}
+		this.setState({ selectedCards: [] });
+		};
+	}
 
   render() {
     const { gameCards } = this.state;
-    console.log(this.state.selectedCards);
     return gameCards.map(card => {
       return (
         <div>
-          {card.code}{" "}
+          {card.code}
           <button name="cps3" onClick={() => this.recordValue(card)}>
             Click to record value
           </button>
