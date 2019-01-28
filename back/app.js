@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
+app.use('/public', express.static('public'));
+
 app.route('/')
   .get(async (req, res) => {
     const result = await knex.select().table('cards');

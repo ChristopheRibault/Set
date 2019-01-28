@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
+import Card from "./Card";
 
 const styles = theme => ({
   root: {
@@ -25,6 +26,7 @@ const Table = (props) => {
             <Grid key={card.code} item xs={3}>
               <p>{card.code}</p>
               <button onClick={() => recordValue(card)}>Click !</button>
+              <Card card={card}/>
             </Grid>
           );
         })}

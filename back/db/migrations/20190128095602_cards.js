@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.string('color').notNullable();
     table.string('filling').notNullable();
     table.string('quantity').notNullable();
+    table.string('image').notNullable();
   })
 };
 
