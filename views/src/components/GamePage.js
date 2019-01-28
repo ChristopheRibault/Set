@@ -55,9 +55,9 @@ class GamePage extends Component {
 
   render() {
     const { gameCards } = this.state;
-    return gameCards.map(card => {
+    return gameCards.map((card, index) => {
       return (
-        <div>
+        <div key={index}>
           {card.code}
           <button name="cps3" onClick={() => this.recordValue(card)}>
             Click to record value
