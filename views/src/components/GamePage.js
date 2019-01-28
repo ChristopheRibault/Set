@@ -38,7 +38,7 @@ class GamePage extends Component {
 
   recordValue = async card => {
     const { selectedCards } = this.state;
-
+    console.log(card);
     selectedCards.push(card);
     await this.setState({ selectedCards });
 
@@ -52,15 +52,22 @@ class GamePage extends Component {
         this.giveMeThreeCards();
         console.log("set !");
       }
+      console.log("pas bon !");
       this.setState({ selectedCards: [] });
     }
   };
+
+  checkGame = async () => {
+    const set = await axios.post("http://localhost:5000/checkGame", { cards: this.state.gameCards });
+    alert(`Il reste ${set.data.quantityOfSets} set. Voulez-vous vraiment ajouter des cartes ?`);
+  }
 
   render() {
     const { gameCards } = this.state;
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
+        <button onClick={this.checkGame}>Check cards</button>
       </div>
     );
   }
