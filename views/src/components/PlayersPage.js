@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GamePage from './GamePage';
 import './PlayersPage.css';
 
 class PlayersPage extends Component {
@@ -8,6 +9,7 @@ class PlayersPage extends Component {
     playerTwo: '',
     playerThree: '',
     playerFour: '',
+    finalPlayers: [],
   }
 
   getPlayerName = (e) => {
@@ -18,14 +20,37 @@ class PlayersPage extends Component {
     this.setState({ numberOfPlayers: e.target.value });
   }
 
+  validatePlayers = (e) => {
+    e.preventDefault();
+    const { finalPlayers, numberOfPlayers, playerOne, playerTwo, playerThree, playerFour } = this.state;
+    finalPlayers.push(playerOne, playerTwo, playerThree, playerFour)
+    this.setState({finalPlayers})
+    // if (numberOfPlayers === 1){
+    //   finalPlayers.push(playerOne)
+    //   this.setState({finalPlayers})
+    // }
+    // else if (numberOfPlayers === 2){
+    //   finalPlayers.push(playerOne, playerTwo)
+    //   this.setState({finalPlayers})
+    // }
+    // else if (numberOfPlayers === 3){
+    //   finalPlayers.push(playerOne, playerTwo, playerThree)
+    //   this.setState({finalPlayers})
+    // }
+    // else if (numberOfPlayers === 4){
+    //   finalPlayers.push(playerOne, playerTwo, playerThree, playerFour)
+    //   this.setState({finalPlayers})
+    // }
+  }
+
   render() {
-    console.log(this.state.numberOfPlayers)
-    const { numberOfPlayers } = this.state;
+    const { numberOfPlayers, finalPlayers } = this.state;
+    console.log(numberOfPlayers, finalPlayers)
     return (
       <div>
         Select number of players
         <button value="1" onClick={this.selectPlayer}>1</button> <button value="2" onClick={this.selectPlayer}>2</button> <button value="3" onClick={this.selectPlayer}>3</button> <button value="4" onClick={this.selectPlayer}>4</button>
-        <form>
+        <form onSubmit={this.validatePlayers}>
           <div className={numberOfPlayers >= 1 ? "visible" : "hidden"}>
             <label htmlFor="playerOne"> Name of player 1: </label>
             <input name="playerOne" onChange={this.getPlayerName} />
@@ -42,7 +67,9 @@ class PlayersPage extends Component {
             <label htmlFor="playerFour"> Name of player 4: </label>
             <input name="playerFour" onChange={this.getPlayerName} />
           </div>
+          <button className={numberOfPlayers > 0 ? "visible" : "hidden"}>Let's play !</button>
         </form>
+        {/* <GamePage numberOfPlayers={numberOfPlayers} playersNames={finalPlayers} /> */}
       </div>
     )
   }
