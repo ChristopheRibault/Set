@@ -8,7 +8,8 @@ class GamePage extends Component {
     deckLoaded: false,
     allCards: [],
     gameCards: [],
-    selectedCards: []
+    selectedCards: [],
+    actualQuantityOfSets: 0,
   };
 
   async componentDidMount() {
@@ -64,11 +65,18 @@ class GamePage extends Component {
 
   checkGame = async () => {
     const set = await axios.post("http://localhost:5000/checkGame", { cards: this.state.gameCards });
-    console.log(`Il reste ${set.data.quantityOfSets} set. Voulez-vous vraiment ajouter des cartes ?`);
+    console.log(set)
+    await this.setState({ actualQuantityOfSets: set.data.quantityOfSets})
   }
 
-  addThreeCards = () => {
-    this.checkGame();
+  addThreeCards = async () => {
+    await this.checkGame();
+
+    if(this.state.actualQuantityOfSets) {
+      console.log(`Il reste ${this.state.actualQuantityOfSets} set, utilisez les indices si vous êtes bloqué`)
+    } else {
+      this.giveMeThreeCards();
+    }
   }
 
 
@@ -78,10 +86,10 @@ class GamePage extends Component {
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
         <GameTools addThreeCards={this.addThreeCards} />
-        <button onClick={this.checkGame}>Check cards</button>
+        {/* <button onClick={this.checkGame}>Check cards</button> */}
       </div>
     );
   }
-}
+};
 
 export default GamePage;
