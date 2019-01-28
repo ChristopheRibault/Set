@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Table from "./Table";
+import GameTools from "./GameTools";
 
 class GamePage extends Component {
   state = {
@@ -64,10 +65,13 @@ class GamePage extends Component {
 
   render() {
     const { gameCards } = this.state;
+    const { numberOfPlayers, finalPlayers} = this.props.location.props;
+    console.log("hello", numberOfPlayers, finalPlayers )
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
         <button onClick={this.checkGame}>Check cards</button>
+        <GameTools numberOfPlayers={numberOfPlayers} playerNames={finalPlayers} />
       </div>
     );
   }
