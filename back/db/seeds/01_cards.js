@@ -19,6 +19,7 @@ exports.seed = function(knex, Promise) {
               card.color = colors[c];
               card.filling = fillings[f];
               card.quantity = quantities[q];
+              card.image = `public/cards/${shapes[s].substr(0,1) + colors[c].substr(0,1) + fillings[f].substr(0,1)}.png`;
               cards.push(card);
             };
           };
