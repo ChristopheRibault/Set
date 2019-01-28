@@ -1,56 +1,60 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 class GamePage extends Component {
   state = {
-    selectedCards: [],
+    allCards: [],
+    gameCards: [],
+    selectedCards: []
+  };
+
+  async componentDidMount() {
+    const deck = await axios.get("http://localhost:5000");
+    await this.setState({ allCards: deck.data });
+    const { allCards } = this.state;
+    const twelve = allCards.splice(0, 12);
+    this.setState({ gameCards: twelve });
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:5000')
-  }
+  recordValue = async card => {
+    const { selectedCards } = this.state;
+    this.state.selectedCards.push(card);
 
-  recordValue = (e) => {
-    this.state.selectedCards.push(e.target.value);
-    this.setState({selectedCards: this.state.selectedCards})
-  }
+    await this.setState({ selectedCards });
 
+    if (this.state.selectedCards.length === 3) {
+      const res = await axios.post("http://localhost:5000/checkSet", {
+        cards: this.state.selectedCards
+      });
+      if (res.data) {
+        const { gameCards } = this.state;
+
+        for (let i = 0; i < 3; i++) {
+          const selectedCardsCode = object => {
+            return object.code === selectedCards[i].code;
+          };
+          const gameCardIndex = gameCards.findIndex(selectedCardsCode)
+          gameCards.splice(gameCardIndex, 1);
+        }
+      }
+      this.setState({ selectedCards: [] });
+    }
+  };
 
   render() {
-    console.log(this.state.selectedCards)
-    return (
-      <div>
-        salut
-        <button value='cps3' name='cps3' onClick={this.recordValue}></button>
-        <button value='crs3' name='crs3' onClick={this.recordValue}></button>
-        <button value='cgs3' name='cgs3' onClick={this.recordValue}></button>
-      </div>
-    )
+    const { gameCards } = this.state;
+    console.log(this.state.selectedCards);
+    return gameCards.map(card => {
+      return (
+        <div>
+          {card.code}{" "}
+          <button name="cps3" onClick={() => this.recordValue(card)}>
+            Click to record value
+          </button>
+        </div>
+      );
+    });
   }
 }
 
 export default GamePage;
-// {
-//   "id": 78,
-//   "code": "cps3",
-//   "shape": "circle",
-//   "color": "purple",
-//   "filling": "stripes",
-//   "quantity": "3"
-// },
-// {
-//   "id": 60,
-//   "code": "crs3",
-//   "shape": "circle",
-//   "color": "red",
-//   "filling": "stripes",
-//   "quantity": "3"
-// },
-// //  {
-//   "id": 69,
-//   "code": "cgs3",
-//   "shape": "circle",
-//   "color": "green",
-//   "filling": "stripes",
-//   "quantity": "3"
-// },
