@@ -10,6 +10,7 @@ class GamePage extends Component {
     gameCards: [],
     selectedCards: [],
     actualQuantityOfSets: 0,
+    openAddThreeCardsModal: false,
   };
 
   async componentDidMount() {
@@ -71,22 +72,36 @@ class GamePage extends Component {
 
   addThreeCards = async () => {
     await this.checkGame();
-
-    if(this.state.actualQuantityOfSets) {
+    console.log('actual quantity of set : ', this.state.actualQuantityOfSets)
+    if(this.state.actualQuantityOfSets > 3) {
       console.log(`Il reste ${this.state.actualQuantityOfSets} set, utilisez les indices si vous êtes bloqué`)
+      this.setState({ openAddThreeCardsModal: true })
     } else {
       this.giveMeThreeCards();
     }
   }
 
+  handleCloseAddThreeCardsModal = () => {
+    this.setState({ openAddThreeCardsModal: false })
+  }
+
 
   render() {
-    const { gameCards } = this.state;
+    const {
+      gameCards,
+      openAddThreeCardsModal,
+      actualQuantityOfSets
+    } = this.state;
+
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
-        <GameTools addThreeCards={this.addThreeCards} />
-        {/* <button onClick={this.checkGame}>Check cards</button> */}
+        <GameTools
+          addThreeCards={this.addThreeCards}
+          openAddThreeCardsModal={openAddThreeCardsModal}
+          handleCloseAddThreeCardsModal={this.handleCloseAddThreeCardsModal}
+          actualQuantityOfSets={actualQuantityOfSets}
+        />
       </div>
     );
   }

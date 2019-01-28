@@ -4,10 +4,15 @@ import AddThreeCards from "./AddThreeCards";
 class GameTools extends Component {
 
   render() {
-    const { addThreeCards } = this.props;
+    const { addThreeCards, openAddThreeCardsModal, handleCloseAddThreeCardsModal, actualQuantityOfSets } = this.props;
     return (
       <div>
-        <AddThreeCards addThreeCards={addThreeCards} />
+        <AddThreeCards
+          addThreeCards={addThreeCards}
+          openAddThreeCardsModal={openAddThreeCardsModal}
+          handleCloseAddThreeCardsModal={handleCloseAddThreeCardsModal}
+          actualQuantityOfSets={actualQuantityOfSets}
+        />
       </div>
     );
   }
