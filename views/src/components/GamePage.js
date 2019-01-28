@@ -76,6 +76,7 @@ class GamePage extends Component {
     //     </div>
     //   );
     // });
+
   }
 }
 
