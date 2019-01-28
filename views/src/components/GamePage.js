@@ -57,25 +57,17 @@ class GamePage extends Component {
 	}
 
   render() {
-
-    const { gameCards, allCards, deckLoaded } = this.state;
-    if (deckLoaded) {
-    return  <Card card={allCards[0]} />
-    } else {
-      return <p>Loading</p>
-    }
-
-    // return gameCards.map(card => {
-    //   return (
-    //     <div>
-
-    //       {card.code}
-    //       <button name="cps3" onClick={() => this.recordValue(card)}>
-    //         Click to record value
-    //       </button>
-    //     </div>
-    //   );
-    // });
+    const { gameCards } = this.state;
+    return gameCards.map((card, index) => {
+      return (
+        <div key={index}>
+          {card.code}
+          <button name="cps3" onClick={() => this.recordValue(card)}>
+            Click to record value
+          </button>
+        </div>
+      );
+    });
 
   }
 }
