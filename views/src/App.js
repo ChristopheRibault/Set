@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import GamePage from './components/GamePage';
+import GamePage from './components/Game/GamePage';
 import PlayersPage from './components/PlayersPage';
 import './App.css';
 
