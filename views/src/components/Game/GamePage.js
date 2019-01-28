@@ -93,10 +93,14 @@ class GamePage extends Component {
       actualQuantityOfSets
     } = this.state;
 
+    const { numberOfPlayers, finalPlayers} = this.props.location.props;
+    console.log("hello", numberOfPlayers, finalPlayers )
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
         <GameTools
+          numberOfPlayers={numberOfPlayers}
+          playerNames={finalPlayers}
           addThreeCards={this.addThreeCards}
           openAddThreeCardsModal={openAddThreeCardsModal}
           handleCloseAddThreeCardsModal={this.handleCloseAddThreeCardsModal}

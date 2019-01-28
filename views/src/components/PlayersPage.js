@@ -25,19 +25,19 @@ class PlayersPage extends Component {
     e.preventDefault();
     const { finalPlayers, numberOfPlayers, playerOne, playerTwo, playerThree, playerFour } = this.state;
     if (Number(numberOfPlayers) === 1){
-      finalPlayers.push(playerOne)
+      finalPlayers.push(`Player 1: ${playerOne}`)
       this.setState({finalPlayers})
     }
     else if (Number(numberOfPlayers) === 2){
-      finalPlayers.push(playerOne, playerTwo)
+      finalPlayers.push(`Player 1: ${playerOne}`, `Player 2: ${playerTwo}`)
       this.setState({finalPlayers})
     }
     else if (Number(numberOfPlayers) === 3){
-      finalPlayers.push(playerOne, playerTwo, playerThree)
+      finalPlayers.push(`Player 1: ${playerOne}`, `Player 2: ${playerTwo}`, `Player 3: ${playerThree}`)
       this.setState({finalPlayers})
     }
     else if (Number(numberOfPlayers) === 4){
-      finalPlayers.push(playerOne, playerTwo, playerThree, playerFour)
+      finalPlayers.push(`Player 1: ${playerOne}`, `Player 2: ${playerTwo}`, `Player 3: ${playerThree}`, `Player 4: ${playerFour}`)
       this.setState({finalPlayers})
     }
     this.setState({ redirect: true })
