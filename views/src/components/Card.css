@@ -9,6 +9,7 @@
   border-radius: 10px;
   margin: 5px;
   box-shadow: 3px 3px 5px grey;
+  cursor: pointer;
 }
 
 .Card img {
