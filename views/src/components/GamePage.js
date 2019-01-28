@@ -3,54 +3,36 @@ import axios from 'axios';
 
 class GamePage extends Component {
   state = {
-    selectedCards: [],
+		allCards: [],
+    gameCards: [],
+		selectedCards: [],
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:5000')
+  async componentDidMount() {
+		const deck = await axios.get('http://localhost:5000')
+		await this.setState({allCards: deck.data})
+		const { allCards } = this.state ;
+		const twelve = allCards.splice(0,12)
+		this.setState({ gameCards:twelve });
   }
 
   recordValue = (e) => {
+		const { selectedCards } = this.state;
     this.state.selectedCards.push(e.target.value);
-    this.setState({selectedCards: this.state.selectedCards})
+    this.setState({selectedCards})
   }
 
-
   render() {
-    console.log(this.state.selectedCards)
+		const { gameCards} = this.state;
+		console.log(this.state.selectedCards)
     return (
+			gameCards.map((card)=>{ return(
       <div>
-        salut
-        <button value='cps3' name='cps3' onClick={this.recordValue}></button>
-        <button value='crs3' name='crs3' onClick={this.recordValue}></button>
-        <button value='cgs3' name='cgs3' onClick={this.recordValue}></button>
-      </div>
+				{card.code} <button value={card.code} name='cps3' onClick={this.recordValue}>Click to record value</button>
+			</div>
+			)})
     )
   }
 }
 
 export default GamePage;
-// {
-//   "id": 78,
-//   "code": "cps3",
-//   "shape": "circle",
-//   "color": "purple",
-//   "filling": "stripes",
-//   "quantity": "3"
-// },
-// {
-//   "id": 60,
-//   "code": "crs3",
-//   "shape": "circle",
-//   "color": "red",
-//   "filling": "stripes",
-//   "quantity": "3"
-// },
-// //  {
-//   "id": 69,
-//   "code": "cgs3",
-//   "shape": "circle",
-//   "color": "green",
-//   "filling": "stripes",
-//   "quantity": "3"
-// },
