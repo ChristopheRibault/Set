@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Table from "./Table";
 
 class GamePage extends Component {
   state = {
@@ -35,9 +36,10 @@ class GamePage extends Component {
 	}
 
   recordValue = async card => {
-		const { selectedCards } = this.state;
+    const { selectedCards } = this.state;
+    console.log(card);
 
-    this.state.selectedCards.push(card);
+    selectedCards.push(card);
 		await this.setState({ selectedCards });
 
     if (this.state.selectedCards.length === 3) {
@@ -45,9 +47,10 @@ class GamePage extends Component {
         cards: this.state.selectedCards
 			});
 
-      if (res.data) {
+      if (!res.data) {
         this.removeThreeCards()
-				this.giveMeThreeCards()
+        this.giveMeThreeCards()
+        console.log('set !')
 			}
 		this.setState({ selectedCards: [] });
 		};
@@ -55,16 +58,23 @@ class GamePage extends Component {
 
   render() {
     const { gameCards } = this.state;
-    return gameCards.map(card => {
-      return (
-        <div>
-          {card.code}
-          <button name="cps3" onClick={() => this.recordValue(card)}>
-            Click to record value
-          </button>
-        </div>
-      );
-    });
+    return (
+      <Table
+        gameCards={gameCards}
+        recordValue={this.recordValue}
+      />
+    )
+    // return gameCards.map(card => {
+    //   return (
+    //     <div>
+    //       {card.code}
+    //       <button name="cps3" onClick={() => this.recordValue(card)}>
+    //         Click to record value
+    //       </button>
+          
+    //     </div>
+    //   );
+    // });
   }
 }
 
