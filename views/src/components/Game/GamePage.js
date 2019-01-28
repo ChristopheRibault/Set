@@ -8,7 +8,9 @@ class GamePage extends Component {
     deckLoaded: false,
     allCards: [],
     gameCards: [],
-    selectedCards: []
+    selectedCards: [],
+    actualQuantityOfSets: 0,
+    openAddThreeCardsModal: false,
   };
 
   async componentDidMount() {
@@ -17,6 +19,13 @@ class GamePage extends Component {
     const { allCards } = this.state;
     const twelve = allCards.splice(0, 12);
     this.setState({ gameCards: twelve });
+  }
+
+  selectThreeCards = async (card) => {
+    const { selectedCards } = this.state;
+    console.log(card);
+    selectedCards.push(card);
+    await this.setState({ selectedCards });
   }
 
   removeThreeCards = () => {
@@ -30,51 +39,76 @@ class GamePage extends Component {
   };
 
   giveMeThreeCards = () => {
-    if (this.state.gameCards.length < 12) {
       const three = this.state.allCards.splice(0, 3);
       this.state.gameCards.push(three[0], three[1], three[2]);
       this.setState({ gameCards: this.state.gameCards });
-    }
+    // }
   };
 
   recordValue = async card => {
-    const { selectedCards } = this.state;
-    console.log(card);
-    selectedCards.push(card);
-    await this.setState({ selectedCards });
+    this.selectThreeCards(card)
 
     if (this.state.selectedCards.length === 3) {
       const res = await axios.post("http://localhost:5000/checkSet", {
         cards: this.state.selectedCards
       });
 
-      if (res.data) {
+      if (res.data && this.state.gameCards.length < 13) {
         this.removeThreeCards();
         this.giveMeThreeCards();
         console.log("set !");
+      } else {
+        console.log("pas bon !");        
       }
-      console.log("pas bon !");
       this.setState({ selectedCards: [] });
     }
   };
 
   checkGame = async () => {
     const set = await axios.post("http://localhost:5000/checkGame", { cards: this.state.gameCards });
-    alert(`Il reste ${set.data.quantityOfSets} set. Voulez-vous vraiment ajouter des cartes ?`);
+    console.log(set)
+    await this.setState({ actualQuantityOfSets: set.data.quantityOfSets})
   }
 
+  addThreeCards = async () => {
+    await this.checkGame();
+    console.log('actual quantity of set : ', this.state.actualQuantityOfSets)
+    if(this.state.actualQuantityOfSets > 3) {
+      console.log(`Il reste ${this.state.actualQuantityOfSets} set, utilisez les indices si vous êtes bloqué`)
+      this.setState({ openAddThreeCardsModal: true })
+    } else {
+      this.giveMeThreeCards();
+    }
+  }
+
+  handleCloseAddThreeCardsModal = () => {
+    this.setState({ openAddThreeCardsModal: false })
+  }
+
+
   render() {
-    const { gameCards } = this.state;
+    const {
+      gameCards,
+      openAddThreeCardsModal,
+      actualQuantityOfSets
+    } = this.state;
+
     const { numberOfPlayers, finalPlayers} = this.props.location.props;
     console.log("hello", numberOfPlayers, finalPlayers )
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
-        <button onClick={this.checkGame}>Check cards</button>
-        <GameTools numberOfPlayers={numberOfPlayers} playerNames={finalPlayers} />
+        <GameTools
+          numberOfPlayers={numberOfPlayers}
+          playerNames={finalPlayers}
+          addThreeCards={this.addThreeCards}
+          openAddThreeCardsModal={openAddThreeCardsModal}
+          handleCloseAddThreeCardsModal={this.handleCloseAddThreeCardsModal}
+          actualQuantityOfSets={actualQuantityOfSets}
+        />
       </div>
     );
   }
-}
+};
 
 export default GamePage;
