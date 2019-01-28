@@ -15,8 +15,8 @@ const styles = theme => ({
 });
 
 const Table = (props) => {
-  const {recordValue, classes, gameCards} = props;  
-  
+  const {recordValue, classes, gameCards} = props;
+
   return (
     <div>
       <Grid container className={classes.root} spacing={16}>

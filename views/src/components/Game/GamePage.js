@@ -8,7 +8,8 @@ class GamePage extends Component {
     deckLoaded: false,
     allCards: [],
     gameCards: [],
-    selectedCards: []
+    selectedCards: [],
+    playingTime: false,
   };
 
   async componentDidMount() {
@@ -17,6 +18,10 @@ class GamePage extends Component {
     const { allCards } = this.state;
     const twelve = allCards.splice(0, 12);
     this.setState({ gameCards: twelve });
+  }
+
+  liftPlayingTime = (isPlaying) => {
+    this.setState({playingTime: isPlaying});
   }
 
   removeThreeCards = () => {
@@ -38,23 +43,27 @@ class GamePage extends Component {
   };
 
   recordValue = async card => {
-    const { selectedCards } = this.state;
-    console.log(card);
-    selectedCards.push(card);
-    await this.setState({ selectedCards });
+    if (this.state.playingTime) {
+      const { selectedCards } = this.state;
+      console.log(card);
+      selectedCards.push(card);
+      await this.setState({ selectedCards });
 
-    if (this.state.selectedCards.length === 3) {
-      const res = await axios.post("http://localhost:5000/checkSet", {
-        cards: this.state.selectedCards
-      });
+      if (this.state.selectedCards.length === 3) {
+        const res = await axios.post("http://localhost:5000/checkSet", {
+          cards: this.state.selectedCards
+        });
 
-      if (res.data) {
-        this.removeThreeCards();
-        this.giveMeThreeCards();
-        console.log("set !");
+        if (res.data) {
+          this.removeThreeCards();
+          this.giveMeThreeCards();
+          console.log("set !");
+        }
+        console.log("pas bon !");
+        this.setState({ selectedCards: [] });
       }
-      console.log("pas bon !");
-      this.setState({ selectedCards: [] });
+    } else {
+      alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
     }
   };
 
@@ -64,14 +73,15 @@ class GamePage extends Component {
   }
 
   render() {
-    const { gameCards } = this.state;
+    console.log(this.state.playingTime)
+    const { gameCards, playingTime } = this.state;
     const { numberOfPlayers, finalPlayers} = this.props.location.props;
     console.log("hello", numberOfPlayers, finalPlayers )
     return (
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
         <button onClick={this.checkGame}>Check cards</button>
-        <GameTools numberOfPlayers={numberOfPlayers} playerNames={finalPlayers} />
+        <GameTools liftPlayingTime={this.liftPlayingTime} numberOfPlayers={numberOfPlayers} playerNames={finalPlayers} />
       </div>
     );
   }
