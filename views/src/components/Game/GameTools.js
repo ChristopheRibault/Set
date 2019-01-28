@@ -15,8 +15,8 @@ class GameTools extends Component {
   render() {
     const { playerNames } = this.props;
     const { playingTime } = this.state;
-    console.log("gametools", this.props.numberOfPlayers, this.props.playerNames)
-    console.log("playerNamePlaying", this.state.playerNamePlaying)
+    // console.log("gametools", this.props.numberOfPlayers, this.props.playerNames)
+    // console.log("playerNamePlaying", this.state.playerNamePlaying)
     return (
       playerNames.map((player)=>{
         return(
