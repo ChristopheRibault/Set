@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       const cards = [];
-      const shapes = ['square', 'triangle', 'circle'];
+      const shapes = ['peanut', 'knacky', 'diamond'];
       const colors = ['red', 'green', 'purple'];
       const fillings = ['full', 'stripes', 'empty'];
       const quantities = [1, 2, 3];
@@ -24,7 +24,6 @@ exports.seed = function(knex, Promise) {
           };
         };
       };
-      console.log(cards)
       return knex('cards').insert(cards);
     });
 };
