@@ -73,7 +73,7 @@ class GamePage extends Component {
   addThreeCards = async () => {
     await this.checkGame();
     console.log('actual quantity of set : ', this.state.actualQuantityOfSets)
-    if(this.state.actualQuantityOfSets > 3) {
+    if(this.state.actualQuantityOfSets > 0) {
       console.log(`Il reste ${this.state.actualQuantityOfSets} set, utilisez les indices si vous êtes bloqué`)
       this.setState({ openAddThreeCardsModal: true })
     } else {

@@ -37,7 +37,7 @@ class AddThreeCardsModal extends React.Component {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              There is {actualQuantityOfSets} Set left. Use hints if you are stucked!
+              There are {actualQuantityOfSets} Set left. Use hints if you are stucked!
             </DialogContentText>
           </DialogContent>
           <DialogActions>
