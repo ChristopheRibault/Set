@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Card from './Card';
+
 class GamePage extends Component {
   state = {
+    deckLoaded: false,
     allCards: [],
     gameCards: [],
     selectedCards: []
@@ -10,7 +13,7 @@ class GamePage extends Component {
 
   async componentDidMount() {
     const deck = await axios.get("http://localhost:5000");
-    await this.setState({ allCards: deck.data });
+    await this.setState({ allCards: deck.data, deckLoaded: true });
     const { allCards } = this.state;
     const twelve = allCards.splice(0, 12);
     this.setState({ gameCards: twelve });
@@ -54,17 +57,25 @@ class GamePage extends Component {
 	}
 
   render() {
-    const { gameCards } = this.state;
-    return gameCards.map(card => {
-      return (
-        <div>
-          {card.code}
-          <button name="cps3" onClick={() => this.recordValue(card)}>
-            Click to record value
-          </button>
-        </div>
-      );
-    });
+
+    const { gameCards, allCards, deckLoaded } = this.state;
+    if (deckLoaded) {
+    return  <Card card={allCards[0]} />
+    } else {
+      return <p>Loading</p>
+    }
+
+    // return gameCards.map(card => {
+    //   return (
+    //     <div>
+
+    //       {card.code}
+    //       <button name="cps3" onClick={() => this.recordValue(card)}>
+    //         Click to record value
+    //       </button>
+    //     </div>
+    //   );
+    // });
   }
 }
 
