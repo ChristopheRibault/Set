@@ -36,7 +36,7 @@ class IntroductionPage extends Component {
       )
     }
     return (
-      <div >
+      <div className="introductionPage">
         <h1 className="backgroundIntroduction">Welcome in the great game of</h1>
         <Button onClick={this.redirectPlayersPage} variant="outlined" color="secondary" className={classes.buttonStartIntro}>
         Let's start playing !
