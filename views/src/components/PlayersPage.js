@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import './PlayersPage.css';
+import ButtonNbOfPlayer from './ButtonNbOfPlayer';
 
 class PlayersPage extends Component {
   state= {
@@ -58,6 +59,7 @@ class PlayersPage extends Component {
     return (
       <div>
         Select number of players
+        <ButtonNbOfPlayer />
         <button value={1} onClick={this.selectPlayer}>1</button>
         <button value={2} onClick={this.selectPlayer}>2</button>
         <button value={3} onClick={this.selectPlayer}>3</button>
