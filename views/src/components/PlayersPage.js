@@ -45,19 +45,24 @@ class PlayersPage extends Component {
 
   render() {
     const { numberOfPlayers, finalPlayers, redirect } = this.state;
-    console.log(typeof numberOfPlayers, finalPlayers)
+    // console.log(typeof numberOfPlayers, finalPlayers)
     if (redirect){
       return (<Redirect to={{
         pathname: "/game_page",
-        props: { numberOfPlayers: numberOfPlayers,
-        finalPlayers: finalPlayers }
+        props: {
+          numberOfPlayers: numberOfPlayers,
+          finalPlayers: finalPlayers
+        }
     }}
 />)
     }
     return (
       <div>
         Select number of players
-        <button value={1} onClick={this.selectPlayer}>1</button> <button value={2} onClick={this.selectPlayer}>2</button> <button value={3} onClick={this.selectPlayer}>3</button> <button value={4} onClick={this.selectPlayer}>4</button>
+        <button value={1} onClick={this.selectPlayer}>1</button>
+        <button value={2} onClick={this.selectPlayer}>2</button>
+        <button value={3} onClick={this.selectPlayer}>3</button>
+        <button value={4} onClick={this.selectPlayer}>4</button>
         <form onSubmit={this.validatePlayers}>
           <div className={numberOfPlayers >= 1 ? "visible" : "hidden"}>
             <label htmlFor="playerOne"> Name of player 1: </label>

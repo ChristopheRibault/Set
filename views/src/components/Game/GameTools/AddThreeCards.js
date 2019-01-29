@@ -16,15 +16,14 @@ const styles = theme => ({
 class AddThreeCards extends Component {
 
   render() {
-    const { addThreeCards, openAddThreeCardsModal, handleCloseAddThreeCardsModal, actualQuantityOfSets } = this.props;  
-    console.log('openAddThreeCardsModal : ', openAddThreeCardsModal)
+    const { addThreeCards, openAddThreeCardsModal, handleAddThreeCardsModal, actualQuantityOfSets } = this.props;  
 
     return (
       <div>
         <button onClick={addThreeCards}>Add three cards</button>
         <AddThreeCardsModal
           openAddThreeCardsModal={openAddThreeCardsModal}
-          handleCloseAddThreeCardsModal={handleCloseAddThreeCardsModal}
+          handleAddThreeCardsModal={handleAddThreeCardsModal}
           actualQuantityOfSets={actualQuantityOfSets}
         />
       </div>

@@ -2,8 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
@@ -11,7 +9,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class AddThreeCardsModal extends React.Component {
+class SetConfirmationModal extends React.Component {
   state = {
     open: false,
   };
@@ -21,11 +19,17 @@ class AddThreeCardsModal extends React.Component {
   };
 
   render() {
-    const { openAddThreeCardsModal, handleCloseAddThreeCardsModal, actualQuantityOfSets } = this.props;
+    const { openSetConfirmationModal, handleSetConfirmationModal, validityOfSet } = this.props;
+    // if (validityOfSet === true) {
+    //   console.log('well done!')
+    // } else if (validityOfSet === false) {
+    //   console.log('bouhou...')
+    // }
     return (
+
       <div>
         <Dialog
-          open={openAddThreeCardsModal}
+          open={openSetConfirmationModal}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
@@ -33,16 +37,11 @@ class AddThreeCardsModal extends React.Component {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            Not so fast, cow-boy!
+          {validityOfSet === true ? 'Welldone!' : 'Nope! Try again!'}
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              There are {actualQuantityOfSets} Set left. Use hints if you are stucked!
-            </DialogContentText>
-          </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseAddThreeCardsModal} color="primary">
-              Got it!
+            <Button onClick={() => handleSetConfirmationModal(false)} color="primary">
+            {validityOfSet === true ? 'Thanks bro!' : 'Ok bro'}
             </Button>
           </DialogActions>
         </Dialog>
@@ -51,4 +50,4 @@ class AddThreeCardsModal extends React.Component {
   }
 }
 
-export default AddThreeCardsModal;
+export default SetConfirmationModal;

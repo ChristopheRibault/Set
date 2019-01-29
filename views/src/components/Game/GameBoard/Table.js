@@ -1,7 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "./Card";
+import Card from "../Card";
+import SetConfirmationModal from "./SetConfirmationModal";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -15,8 +16,15 @@ const styles = theme => ({
 });
 
 const Table = (props) => {
-  const {recordValue, classes, gameCards} = props;
-
+  const {
+    recordValue,
+    classes,
+    gameCards,
+    openSetConfirmationModal,
+    handleSetConfirmationModal,
+    validityOfSet,
+  } = props;  
+  
   return (
     <div>
       <Grid container className={classes.root} spacing={16}>
@@ -30,6 +38,11 @@ const Table = (props) => {
           );
         })}
       </Grid>
+      <SetConfirmationModal
+        openSetConfirmationModal={openSetConfirmationModal}
+        handleSetConfirmationModal={handleSetConfirmationModal}
+        validityOfSet={validityOfSet}
+      />
     </div>
   );
 };
