@@ -1,39 +1,49 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { IconButton, Grid } from "@material-ui/core";
 import Refresh from "@material-ui/icons/Refresh";
 import Info from "@material-ui/icons/Info";
 import logo from "../../Assets/logo_set.gif";
+import InstructionModal from "./InstructionsModal";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const styles = theme => ({
+  root: {
+    backgroundColor: "#99d6ff"
+  },
   gameBoardIcons: {
     // border: "2px solid salmon",
     display: "flex",
     justifyContent: "flex-end"
   },
   gameBoardIcon: {
-    height: 50,
+    height: 50
   },
   logo: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: 30,
-    marginBottom: 50,
+    display: "flex",
+    justifyContent: "center",
+    marginTop: 10,
+    marginBottom: 10
   },
   table: {
-    padding: 20,
-  },
+    padding: 20
+  }
 });
 
-const Header = props => {
-  const {
-    restart,
-    classes
-  } = props;
+class Header extends Component {
+  state = {
+    openInstructionModal: false
+  };
 
-  return (
-    <div>
+  handleInstructionModal = boolean => {
+    this.setState({ openInstructionModal: boolean });
+  };
+
+  render() {
+    const { restart, classes, allCards } = this.props;
+    const { openInstructionModal } = this.state;
+
+    return (
       <div>
         <Grid container className={classes.root}>
           <Grid item xs={2} className={classes.emptyGridHeader} />
@@ -41,7 +51,10 @@ const Header = props => {
             <img src={logo} alt={"Set logo"} />
           </Grid>
           <Grid item xs={2} className={classes.gameBoardIcons}>
-            <IconButton className={classes.gameBoardIcon}>
+            <IconButton
+              className={classes.gameBoardIcon}
+              onClick={() => this.handleInstructionModal(true)}
+            >
               <Info />
             </IconButton>
             <IconButton onClick={restart} className={classes.gameBoardIcon}>
@@ -49,9 +62,14 @@ const Header = props => {
             </IconButton>
           </Grid>
         </Grid>
+        <InstructionModal
+          openInstructionModal={openInstructionModal}
+          handleInstructionModal={this.handleInstructionModal}
+          allCards={allCards}
+        />
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default withStyles(styles)(Header);

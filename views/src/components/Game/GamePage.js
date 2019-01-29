@@ -11,9 +11,10 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
-  control: {
-    padding: theme.spacing.unit * 2
-  }
+  gameTools: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 class GamePage extends Component {
@@ -27,9 +28,9 @@ class GamePage extends Component {
     openAddThreeCardsModal: false,
     redirect: false,
     openSetConfirmationModal: false,
-    validityOfSet: '',
-    playerNamePlaying: '',
-    players: this.props.location.props.finalPlayers,
+    validityOfSet: "",
+    playerNamePlaying: "",
+    players: this.props.location.props.finalPlayers
   };
 
   async componentDidMount() {
@@ -69,16 +70,16 @@ class GamePage extends Component {
   addScore = () => {
     const { players } = this.state;
     players.forEach(player => {
-      if(this.state.playerNamePlaying === player.name){
-        player.score += 1
+      if (this.state.playerNamePlaying === player.name || this.state.playerNamePlaying === player.player) {
+        player.score += 1;
       }
-    this.setState({players})
+      this.setState({ players });
     });
-  }
+  };
 
-  liftGettingPlayerNamePlaying = (playerName) => {
-    this.setState({playerNamePlaying: playerName})
-  }
+  liftGettingPlayerNamePlaying = playerName => {
+    this.setState({ playerNamePlaying: playerName });
+  };
 
   recordValue = async (card) => {
     const { selectedCards} = this.state;
@@ -95,30 +96,28 @@ class GamePage extends Component {
           cards: this.state.selectedCards
         });
 
-        if (!res.data) {
+        if (res.data) {
           this.removeThreeCards();
-          this.handleSetConfirmationModal(true, true);
+          this.handleSetConfirmationModal(true);
           this.addScore();
           if(this.state.gameCards.length < 13){
             this.giveMeThreeCards();
           }
-          console.log("set !");
         } else {
-          this.handleSetConfirmationModal(true, false);
-          console.log("pas bon !");
+          this.handleSetConfirmationModal(false);
         }
         this.setState({ selectedCards: [] });
       }
     } else {
-      alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
-    }
+        alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
+      }
   };
 
   checkGame = async () => {
     const set = await axios.post("http://localhost:5000/checkGame", {
       cards: this.state.gameCards
     });
-    console.log(set);
+    console.log(set.data.sets);
     await this.setState({ actualQuantityOfSets: set.data.quantityOfSets });
   };
 
@@ -140,8 +139,22 @@ class GamePage extends Component {
     this.setState({ redirect: true });
   };
 
-  handleSetConfirmationModal = async (booleanOpenModal, booleanSetIsValid) => {
-    await this.setState({ openSetConfirmationModal: booleanOpenModal, validityOfSet: booleanSetIsValid});
+  handleSetConfirmationModal = (booleanSetIsValid) => {
+      this.setState({
+        openSetConfirmationModal: true,
+        validityOfSet: booleanSetIsValid
+      });
+    setTimeout(
+      () =>
+        this.setState({
+          openSetConfirmationModal: false,
+        }),
+      2000
+    );
+    const { selectedCards} = this.state;
+    selectedCards.forEach(cardClicked => {
+        cardClicked.select = false;
+    })
   };
 
   render() {
@@ -153,6 +166,7 @@ class GamePage extends Component {
       actualQuantityOfSets,
       redirect,
       players,
+      allCards,
     } = this.state;
     const { classes } = this.props;
 
@@ -176,9 +190,9 @@ class GamePage extends Component {
       <div>
         <Grid container className={classes.root} spacing={16}>
           <Grid item xs={12}>
-            <Header restart={this.restart}/>
+            <Header restart={this.restart} allCards={allCards} />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2} className={classes.gameTools}>
             <GameTools
               liftPlayingTime={this.liftPlayingTime}
               numberOfPlayers={numberOfPlayers}
@@ -190,14 +204,14 @@ class GamePage extends Component {
               liftGettingPlayerNamePlaying={this.liftGettingPlayerNamePlaying}
             />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={10}>
             <GameBoard
               gameCards={gameCards}
               recordValue={this.recordValue}
-              handleSetConfirmationModal={this.handleSetConfirmationModal}
               openSetConfirmationModal={openSetConfirmationModal}
               validityOfSet={validityOfSet}
               restart={this.restart}
+              className={classes.gameBoard}
             />
           </Grid>
         </Grid>

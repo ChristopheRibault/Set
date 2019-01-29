@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, Button } from "@material-ui/core";
 import AddThreeCardsModal from "./AddThreeCardsModal";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   control: {
     padding: theme.spacing.unit * 2
@@ -14,18 +14,25 @@ const styles = theme => ({
 });
 
 class AddThreeCards extends Component {
-
   render() {
     const {
       addThreeCards,
       openAddThreeCardsModal,
       handleAddThreeCardsModal,
-      actualQuantityOfSets
+      actualQuantityOfSets,
+      classes
     } = this.props;
 
     return (
       <div>
-        <button onClick={addThreeCards}>Add three cards</button>
+        <Button
+          onClick={addThreeCards}
+          className={classes.addThreeCards}
+          color="secondary"
+          variant="outlined"
+        >
+          Add three cards
+        </Button>
         <AddThreeCardsModal
           openAddThreeCardsModal={openAddThreeCardsModal}
           handleAddThreeCardsModal={handleAddThreeCardsModal}
@@ -33,9 +40,7 @@ class AddThreeCards extends Component {
         />
       </div>
     );
-
   }
-
-};
+}
 
 export default withStyles(styles)(AddThreeCards);

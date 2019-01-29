@@ -12,6 +12,7 @@ class Card extends Component {
     for (let i = 0; i < card.quantity; i++){
       array[i] = 1;
     }
+
     return (
       <div className={card.select ? "contour" : "Card"}>
         {array.map((e, i) => <img key={i} src={`${domain}${card.image}`} name={card.code} alt={card.code}/>)}
