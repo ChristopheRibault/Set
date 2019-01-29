@@ -3,6 +3,17 @@ import axios from "axios";
 import GameTools from "./GameTools/GameTools";
 import GameBoard from "./GameBoard/GameBoard";
 import { Redirect } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  control: {
+    padding: theme.spacing.unit * 2
+  }
+});
 
 class GamePage extends Component {
   state = {
@@ -14,7 +25,7 @@ class GamePage extends Component {
     actualQuantityOfSets: 0,
     openAddThreeCardsModal: false,
     redirect: false,
-    openSetConfirmationModal: false,
+    openSetConfirmationModal: false
   };
 
   async componentDidMount() {
@@ -25,11 +36,11 @@ class GamePage extends Component {
     this.setState({ gameCards: twelve });
   }
 
-  liftPlayingTime = (isPlaying) => {
-    this.setState({playingTime: isPlaying})
-  }
+  liftPlayingTime = isPlaying => {
+    this.setState({ playingTime: isPlaying });
+  };
 
-  selectThreeCards = async (card) => {
+  selectThreeCards = async card => {
     const { selectedCards } = this.state;
     console.log(card);
     selectedCards.push(card);
@@ -47,32 +58,32 @@ class GamePage extends Component {
   };
 
   giveMeThreeCards = () => {
-      const three = this.state.allCards.splice(0, 3);
-      this.state.gameCards.push(three[0], three[1], three[2]);
-      this.setState({ gameCards: this.state.gameCards });
+    const three = this.state.allCards.splice(0, 3);
+    this.state.gameCards.push(three[0], three[1], three[2]);
+    this.setState({ gameCards: this.state.gameCards });
   };
 
   recordValue = async card => {
     if (this.state.playingTime) {
       const { selectedCards } = this.state;
-      this.selectThreeCards(card)
+      this.selectThreeCards(card);
 
       if (selectedCards.length === 3) {
         const res = await axios.post("http://localhost:5000/checkSet", {
           cards: this.state.selectedCards
         });
 
-      if (res.data && this.state.gameCards.length < 13) {
-        this.removeThreeCards();
-        this.giveMeThreeCards();
-        this.handleSetConfirmationModal(true);
-        console.log("set !");
-      } else {
-        console.log("pas bon !");
+        if (res.data && this.state.gameCards.length < 13) {
+          this.removeThreeCards();
+          this.giveMeThreeCards();
+          this.handleSetConfirmationModal(true);
+          console.log("set !");
+        } else {
+          console.log("pas bon !");
+        }
+        this.setState({ selectedCards: [] });
       }
-      this.setState({ selectedCards: [] });
-      }
-    }  else {
+    } else {
       alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
     }
   };
@@ -95,7 +106,7 @@ class GamePage extends Component {
     }
   };
 
-  handleAddThreeCardsModal = (boolean) => {
+  handleAddThreeCardsModal = boolean => {
     this.setState({ openAddThreeCardsModal: boolean });
   };
 
@@ -103,10 +114,13 @@ class GamePage extends Component {
     this.setState({ redirect: true });
   };
 
-  handleSetConfirmationModal = async (boolean) => {
-    console.log('YOOOOOOOOOO')
+  handleSetConfirmationModal = async boolean => {
+    console.log("YOOOOOOOOOO");
     await this.setState({ openSetConfirmationModal: boolean });
-    console.log('this.state.openSetConfirmationModal : ', this.state.openSetConfirmationModal);
+    console.log(
+      "this.state.openSetConfirmationModal : ",
+      this.state.openSetConfirmationModal
+    );
   };
 
   render() {
@@ -117,6 +131,8 @@ class GamePage extends Component {
       actualQuantityOfSets,
       redirect
     } = this.state;
+
+    const { classes } = this.props;
 
     const { numberOfPlayers, finalPlayers } = this.props.location.props;
 
@@ -136,25 +152,31 @@ class GamePage extends Component {
 
     return (
       <div>
-        <GameBoard
-          gameCards={gameCards}
-          recordValue={this.recordValue}
-          handleSetConfirmationModal={this.handleSetConfirmationModal}
-          openSetConfirmationModal={openSetConfirmationModal}
-        />
-        <GameTools
-          liftPlayingTime={this.liftPlayingTime}
-          numberOfPlayers={numberOfPlayers}
-          playerNames={finalPlayers}
-          addThreeCards={this.addThreeCards}
-          openAddThreeCardsModal={openAddThreeCardsModal}
-          handleAddThreeCardsModal={this.handleAddThreeCardsModal}
-          actualQuantityOfSets={actualQuantityOfSets}
-        />
-        <button onClick={this.restart}>Restart</button>
+        <Grid container className={classes.root} spacing={16}>
+          <Grid item xs={3}>
+            <GameTools
+              liftPlayingTime={this.liftPlayingTime}
+              numberOfPlayers={numberOfPlayers}
+              playerNames={finalPlayers}
+              addThreeCards={this.addThreeCards}
+              openAddThreeCardsModal={openAddThreeCardsModal}
+              handleAddThreeCardsModal={this.handleAddThreeCardsModal}
+              actualQuantityOfSets={actualQuantityOfSets}
+            />
+          </Grid>
+          <Grid item xs={9}>
+            <GameBoard
+              gameCards={gameCards}
+              recordValue={this.recordValue}
+              handleSetConfirmationModal={this.handleSetConfirmationModal}
+              openSetConfirmationModal={openSetConfirmationModal}
+              restart={this.restart}
+            />
+          </Grid>
+        </Grid>
       </div>
     );
   }
 }
 
-export default GamePage;
+export default withStyles(styles)(GamePage);
