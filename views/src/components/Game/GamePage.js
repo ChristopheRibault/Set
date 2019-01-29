@@ -9,6 +9,7 @@ class GamePage extends Component {
     allCards: [],
     gameCards: [],
     selectedCards: [],
+    playingTime: false,
     actualQuantityOfSets: 0,
     openAddThreeCardsModal: false,
   };
@@ -19,6 +20,10 @@ class GamePage extends Component {
     const { allCards } = this.state;
     const twelve = allCards.splice(0, 12);
     this.setState({ gameCards: twelve });
+  }
+
+  liftPlayingTime = (isPlaying) => {
+    this.setState({playingTime: isPlaying})
   }
 
   selectThreeCards = async (card) => {
@@ -42,25 +47,29 @@ class GamePage extends Component {
       const three = this.state.allCards.splice(0, 3);
       this.state.gameCards.push(three[0], three[1], three[2]);
       this.setState({ gameCards: this.state.gameCards });
-    // }
   };
 
   recordValue = async card => {
-    this.selectThreeCards(card)
+    if (this.state.playingTime) {
+      const { selectedCards } = this.state;
+      this.selectThreeCards(card)
 
-    if (this.state.selectedCards.length === 3) {
-      const res = await axios.post("http://localhost:5000/checkSet", {
-        cards: this.state.selectedCards
-      });
+      if (selectedCards.length === 3) {
+        const res = await axios.post("http://localhost:5000/checkSet", {
+          cards: this.state.selectedCards
+        });
 
       if (res.data && this.state.gameCards.length < 13) {
         this.removeThreeCards();
         this.giveMeThreeCards();
         console.log("set !");
       } else {
-        console.log("pas bon !");        
+        console.log("pas bon !");
       }
       this.setState({ selectedCards: [] });
+      }
+    }  else {
+      alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
     }
   };
 
@@ -99,6 +108,7 @@ class GamePage extends Component {
       <div>
         <Table gameCards={gameCards} recordValue={this.recordValue} />
         <GameTools
+          liftPlayingTime={this.liftPlayingTime}
           numberOfPlayers={numberOfPlayers}
           playerNames={finalPlayers}
           addThreeCards={this.addThreeCards}

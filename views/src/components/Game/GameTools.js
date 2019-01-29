@@ -8,19 +8,14 @@ class GameTools extends Component {
     playingTime: false
   };
 
-  getNamePlayerPlaying = async e => {
-    await this.setState({
-      playerNamePlaying: e.target.name,
-      playingTime: true
-    });
-    setTimeout(
-      () => this.setState({ playerNamePlaying: "", playingTime: false }),
-      5000
-    );
-  };
+  getNamePlayerPlaying = async (e) => {
+    this.props.liftPlayingTime(true);
+    await this.setState({playerNamePlaying: e.target.name, playingTime: true});
+    await setTimeout(()=>this.setState({playerNamePlaying: '', playingTime: false}, this.props.liftPlayingTime(false)), 8000);
+  }
 
   render() {
-    const { playingTime } = this.state;
+    const { playingTime, playerNamePlaying } = this.state;
     const {
       playerNames,
       addThreeCards,
@@ -31,20 +26,14 @@ class GameTools extends Component {
 
     return (
       <div>
-        {playerNames.map(player => {
+        {playerNames.map((player, index) => {
           return (
-            <div>
-              {player}{" "}
-              <button
-                onClick={this.getNamePlayerPlaying}
-                className={playingTime ? "disabled" : "active"}
-                name={player}
-              >
-                SET !
-              </button>
+            <div key={index}>
+            {player.player}: {player.name} <button onClick={this.getNamePlayerPlaying} className={playingTime ? "disabled" : "active"} name={player.name}>SET !</button>
             </div>
           );
         })}
+        {playingTime && <div>{playerNamePlaying} is playing !</div>}
         <AddThreeCards
           addThreeCards={addThreeCards}
           openAddThreeCardsModal={openAddThreeCardsModal}
