@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "../Card";
-import '../Card.css';
 import SetConfirmationModal from "./SetConfirmationModal";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
