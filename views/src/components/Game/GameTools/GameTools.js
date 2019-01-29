@@ -10,9 +10,6 @@ const styles = theme => ({
   control: {
     padding: theme.spacing.unit * 2
   },
-  gameTools: {
-    marginTop: 20
-  },
   gameToolsElement: {
     padding: 30
   }
@@ -55,6 +52,7 @@ class GameTools extends Component {
     return (
       <div className={classes.gameTools}>
         {playerNames.map((player, index) => {
+          console.log(player)
           return (
             <div key={index} className={classes.gameToolsElement}>
               {player.name !== "" ? player.name : player.player} Score: {player.score}{"  "}

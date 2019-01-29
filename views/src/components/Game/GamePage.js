@@ -69,7 +69,7 @@ class GamePage extends Component {
   addScore = () => {
     const { players } = this.state;
     players.forEach(player => {
-      if (this.state.playerNamePlaying === player.name) {
+      if (this.state.playerNamePlaying === player.name || this.state.playerNamePlaying === player.player) {
         player.score += 1;
       }
       this.setState({ players });
