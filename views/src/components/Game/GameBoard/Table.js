@@ -23,8 +23,7 @@ const Table = (props) => {
     openSetConfirmationModal,
     handleSetConfirmationModal,
     validityOfSet,
-  } = props;  
-  
+  } = props;
   return (
     <div>
       <Grid container className={classes.root} spacing={16}>

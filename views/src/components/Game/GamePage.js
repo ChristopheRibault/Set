@@ -28,6 +28,8 @@ class GamePage extends Component {
     redirect: false,
     openSetConfirmationModal: false,
     validityOfSet: '',
+    playerNamePlaying: '',
+    players: this.props.location.props.finalPlayers,
   };
 
   async componentDidMount() {
@@ -44,7 +46,6 @@ class GamePage extends Component {
 
   selectThreeCards = async card => {
     const { selectedCards } = this.state;
-    console.log(card);
     selectedCards.push(card);
     await this.setState({ selectedCards });
   };
@@ -65,6 +66,20 @@ class GamePage extends Component {
     this.setState({ gameCards: this.state.gameCards });
   };
 
+  addScore = () => {
+    const { players } = this.state;
+    players.forEach(player => {
+      if(this.state.playerNamePlaying === player.name){
+        player.score += 1
+      }
+    this.setState({players})
+    });
+  }
+
+  liftGettingPlayerNamePlaying = (playerName) => {
+    this.setState({playerNamePlaying: playerName})
+  }
+
   recordValue = async card => {
     if (this.state.playingTime) {
       const { selectedCards } = this.state;
@@ -79,6 +94,12 @@ class GamePage extends Component {
           this.removeThreeCards();
           this.giveMeThreeCards();
           this.handleSetConfirmationModal(true, true);
+          this.addScore();
+          console.log("set !");
+        } else if (res.data && this.state.gameCards.length > 13) {
+          this.removeThreeCards();
+          this.handleSetConfirmationModal(true, true);
+          this.addScore();
           console.log("set !");
         } else {
           this.handleSetConfirmationModal(true, false);
@@ -118,9 +139,7 @@ class GamePage extends Component {
   };
 
   handleSetConfirmationModal = async (booleanOpenModal, booleanSetIsValid) => {
-    console.log("YOOOOOOOOOO");
     await this.setState({ openSetConfirmationModal: booleanOpenModal, validityOfSet: booleanSetIsValid});
-    console.log('openSetConfirmationModal : ', this.state.openSetConfirmationModal, 'validityOfSet : ', this.state.validityOfSet)
   };
 
   render() {
@@ -130,7 +149,8 @@ class GamePage extends Component {
       openSetConfirmationModal,
       validityOfSet,
       actualQuantityOfSets,
-      redirect
+      redirect,
+      players
     } = this.state;
 
     const { classes } = this.props;
@@ -161,11 +181,12 @@ class GamePage extends Component {
             <GameTools
               liftPlayingTime={this.liftPlayingTime}
               numberOfPlayers={numberOfPlayers}
-              playerNames={finalPlayers}
+              playerNames={players}
               addThreeCards={this.addThreeCards}
               openAddThreeCardsModal={openAddThreeCardsModal}
               handleAddThreeCardsModal={this.handleAddThreeCardsModal}
               actualQuantityOfSets={actualQuantityOfSets}
+              liftGettingPlayerNamePlaying={this.liftGettingPlayerNamePlaying}
             />
           </Grid>
           <Grid item xs={9}>
