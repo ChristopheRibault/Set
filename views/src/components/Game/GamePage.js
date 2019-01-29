@@ -12,7 +12,8 @@ class GamePage extends Component {
     selectedCards: [],
     actualQuantityOfSets: 0,
     openAddThreeCardsModal: false,
-    redirect: false
+    redirect: false,
+    openSetConfirmationModal: false,
   };
 
   async componentDidMount() {
@@ -59,6 +60,7 @@ class GamePage extends Component {
       if (res.data && this.state.gameCards.length < 13) {
         this.removeThreeCards();
         this.giveMeThreeCards();
+        this.handleOpenSetConfirmationModal();
         console.log("set !");
       } else {
         console.log("pas bon !");
@@ -93,10 +95,20 @@ class GamePage extends Component {
     this.setState({ redirect: true });
   };
 
+  handleOpenSetConfirmationModal = async () => {
+    await this.setState({ openSetConfirmationModal: true });
+    console.log('this.state.openSetConfirmationModal : ', this.state.openSetConfirmationModal);
+  };
+
+  handleCloseSetConfirmationModal = () => {
+    this.setState({ openSetConfirmationModal: false });
+  }
+
   render() {
     const {
       gameCards,
       openAddThreeCardsModal,
+      openSetConfirmationModal,
       actualQuantityOfSets,
       redirect
     } = this.state;
@@ -107,7 +119,7 @@ class GamePage extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/players_page",
+            pathname: "/",
             props: {
               numberOfPlayers: numberOfPlayers,
               finalPlayers: finalPlayers
@@ -117,10 +129,15 @@ class GamePage extends Component {
       );
     }
 
-    console.log("hello", numberOfPlayers, finalPlayers);
     return (
       <div>
-        <Table gameCards={gameCards} recordValue={this.recordValue} />
+        <Table
+          gameCards={gameCards}
+          recordValue={this.recordValue}
+          handleOpenSetConfirmationModal={this.handleOpenSetConfirmationModal}
+          handleCloseSetConfirmationModal={this.handleCloseSetConfirmationModal}
+          openSetConfirmationModal={openSetConfirmationModal}
+        />
         <GameTools
           numberOfPlayers={numberOfPlayers}
           playerNames={finalPlayers}

@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "./Card";
+import SetConfirmationModal from "./SetConfirmationModal";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -15,7 +16,14 @@ const styles = theme => ({
 });
 
 const Table = (props) => {
-  const {recordValue, classes, gameCards} = props;  
+  const {
+    recordValue,
+    classes,
+    gameCards,
+    openSetConfirmationModal,
+    handleOpenSetConfirmationModal,
+    handleCloseSetConfirmationModal
+  } = props;  
   
   return (
     <div>
@@ -30,6 +38,8 @@ const Table = (props) => {
           );
         })}
       </Grid>
+      <SetConfirmationModal openSetConfirmationModal={openSetConfirmationModal} handleCloseSetConfirmationModal={handleCloseSetConfirmationModal}/>
+      <button onClick={handleOpenSetConfirmationModal}>Set Confirmation Modal</button>
     </div>
   );
 };
