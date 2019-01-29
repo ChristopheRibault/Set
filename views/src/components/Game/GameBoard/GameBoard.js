@@ -4,20 +4,6 @@ import Table from "./Table";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 const styles = theme => ({
-  gameBoardIcons: {
-    // border: "2px solid salmon",
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  gameBoardIcon: {
-    height: 50,
-  },
-  logo: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: 30,
-    marginBottom: 50,
-  },
   table: {
     padding: 20,
   },
@@ -34,13 +20,12 @@ const GameBoard = props => {
   } = props;
 
   return (
-    <div>
+    <div className={classes.table}>
       <Table
         gameCards={gameCards}
         recordValue={recordValue}
         openSetConfirmationModal={openSetConfirmationModal}
         validityOfSet={validityOfSet}
-        className={classes.table}
       />
     </div>
   );

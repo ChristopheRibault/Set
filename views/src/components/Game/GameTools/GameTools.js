@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import AddThreeCards from "./AddThreeCards";
-import "./GameTools.css";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, Button } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -11,8 +10,18 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2
   },
   gameToolsElement: {
-    padding: 30
-  }
+    padding: 15,
+  },
+  disabled: {
+    margin: theme.spacing.unit,
+    opacity: 0.65,
+    cursor: "not-allowed",
+    marginTop: 7,
+  },
+  active: {
+    margin: theme.spacing.unit,
+    marginTop: 7,
+  },
 });
 
 class GameTools extends Component {
@@ -52,17 +61,24 @@ class GameTools extends Component {
     return (
       <div className={classes.gameTools}>
         {playerNames.map((player, index) => {
-          console.log(player)
           return (
             <div key={index} className={classes.gameToolsElement}>
-              {player.name !== "" ? player.name : player.player} Score: {player.score}{"  "}
-              <button
-                onClick={() => this.getNamePlayerPlaying(player.name !== "" ? player.name : player.player)}
-                className={playingTime ? "disabled" : "active"}
+              {player.name !== "" ? player.name : player.player} Score:{" "}
+              {player.score}
+              <br />
+              <Button
+                onClick={() =>
+                  this.getNamePlayerPlaying(
+                    player.name !== "" ? player.name : player.player
+                  )
+                }
+                className={playingTime ? classes.disabled : classes.active}
                 name={player.name}
+                color="secondary"
+                variant="outlined"
               >
                 SET !
-              </button>
+              </Button>
             </div>
           );
         })}

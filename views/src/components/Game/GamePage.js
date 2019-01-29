@@ -11,9 +11,10 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
-  control: {
-    padding: theme.spacing.unit * 2
-  }
+  gameTools: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 class GamePage extends Component {
@@ -95,15 +96,12 @@ class GamePage extends Component {
           this.giveMeThreeCards();
           this.handleSetConfirmationModal(true);
           this.addScore();
-          console.log("set !");
         } else if (res.data && this.state.gameCards.length > 13) {
           this.removeThreeCards();
           this.handleSetConfirmationModal(true);
           this.addScore();
-          console.log("set !");
         } else {
           this.handleSetConfirmationModal(false);
-          console.log("pas bon !");
         }
         this.setState({ selectedCards: [] });
       }
@@ -150,8 +148,6 @@ class GamePage extends Component {
         }),
       2000
     );
-
-    // await this.setState({ openSetConfirmationModal: booleanOpenModal, validityOfSet: booleanSetIsValid});
   };
 
   render() {
@@ -162,7 +158,8 @@ class GamePage extends Component {
       validityOfSet,
       actualQuantityOfSets,
       redirect,
-      players
+      players,
+      allCards,
     } = this.state;
 
     const { classes } = this.props;
@@ -187,9 +184,9 @@ class GamePage extends Component {
       <div>
         <Grid container className={classes.root} spacing={16}>
           <Grid item xs={12}>
-            <Header restart={this.restart} />
+            <Header restart={this.restart} allCards={allCards} />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2} className={classes.gameTools}>
             <GameTools
               liftPlayingTime={this.liftPlayingTime}
               numberOfPlayers={numberOfPlayers}
@@ -201,13 +198,14 @@ class GamePage extends Component {
               liftGettingPlayerNamePlaying={this.liftGettingPlayerNamePlaying}
             />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={10}>
             <GameBoard
               gameCards={gameCards}
               recordValue={this.recordValue}
               openSetConfirmationModal={openSetConfirmationModal}
               validityOfSet={validityOfSet}
               restart={this.restart}
+              className={classes.gameBoard}
             />
           </Grid>
         </Grid>
