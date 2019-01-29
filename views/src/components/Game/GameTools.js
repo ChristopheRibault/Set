@@ -20,7 +20,7 @@ class GameTools extends Component {
       playerNames,
       addThreeCards,
       openAddThreeCardsModal,
-      handleCloseAddThreeCardsModal,
+      handleAddThreeCardsModal,
       actualQuantityOfSets
     } = this.props;
 
@@ -37,7 +37,7 @@ class GameTools extends Component {
         <AddThreeCards
           addThreeCards={addThreeCards}
           openAddThreeCardsModal={openAddThreeCardsModal}
-          handleCloseAddThreeCardsModal={handleCloseAddThreeCardsModal}
+          handleAddThreeCardsModal={handleAddThreeCardsModal}
           actualQuantityOfSets={actualQuantityOfSets}
         />
       </div>

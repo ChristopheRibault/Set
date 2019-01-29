@@ -19,7 +19,7 @@ class SetConfirmationModal extends React.Component {
   };
 
   render() {
-    const { openSetConfirmationModal, handleCloseSetConfirmationModal } = this.props;
+    const { openSetConfirmationModal, handleSetConfirmationModal } = this.props;
     return (
       <div>
         <Dialog
@@ -34,7 +34,7 @@ class SetConfirmationModal extends React.Component {
             Well done!
           </DialogTitle>
           <DialogActions>
-            <Button onClick={handleCloseSetConfirmationModal} color="primary">
+            <Button onClick={() => handleSetConfirmationModal(false)} color="primary">
               Thanks bro!
             </Button>
           </DialogActions>

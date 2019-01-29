@@ -21,8 +21,7 @@ const Table = (props) => {
     classes,
     gameCards,
     openSetConfirmationModal,
-    handleOpenSetConfirmationModal,
-    handleCloseSetConfirmationModal
+    handleSetConfirmationModal
   } = props;  
   
   return (
@@ -38,8 +37,7 @@ const Table = (props) => {
           );
         })}
       </Grid>
-      <SetConfirmationModal openSetConfirmationModal={openSetConfirmationModal} handleCloseSetConfirmationModal={handleCloseSetConfirmationModal}/>
-      <button onClick={handleOpenSetConfirmationModal}>Set Confirmation Modal</button>
+      <SetConfirmationModal openSetConfirmationModal={openSetConfirmationModal} handleSetConfirmationModal={handleSetConfirmationModal}/>
     </div>
   );
 };

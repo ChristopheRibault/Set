@@ -21,7 +21,7 @@ class AddThreeCardsModal extends React.Component {
   };
 
   render() {
-    const { openAddThreeCardsModal, handleCloseAddThreeCardsModal, actualQuantityOfSets } = this.props;
+    const { openAddThreeCardsModal, handleAddThreeCardsModal, actualQuantityOfSets } = this.props;
     return (
       <div>
         <Dialog
@@ -41,7 +41,7 @@ class AddThreeCardsModal extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseAddThreeCardsModal} color="primary">
+            <Button onClick={() => handleAddThreeCardsModal(false)} color="primary">
               Got it!
             </Button>
           </DialogActions>

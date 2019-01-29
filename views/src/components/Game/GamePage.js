@@ -65,7 +65,7 @@ class GamePage extends Component {
       if (res.data && this.state.gameCards.length < 13) {
         this.removeThreeCards();
         this.giveMeThreeCards();
-        this.handleOpenSetConfirmationModal();
+        this.handleSetConfirmationModal(true);
         console.log("set !");
       } else {
         console.log("pas bon !");
@@ -89,28 +89,25 @@ class GamePage extends Component {
     await this.checkGame();
 
     if (this.state.actualQuantityOfSets > 0) {
-      this.setState({ openAddThreeCardsModal: true });
+      this.handleAddThreeCardsModal(true);
     } else {
       this.giveMeThreeCards();
     }
   };
 
-  handleCloseAddThreeCardsModal = () => {
-    this.setState({ openAddThreeCardsModal: false });
+  handleAddThreeCardsModal = (boolean) => {
+    this.setState({ openAddThreeCardsModal: boolean });
   };
 
   restart = () => {
     this.setState({ redirect: true });
   };
 
-  handleOpenSetConfirmationModal = async () => {
-    await this.setState({ openSetConfirmationModal: true });
+  handleSetConfirmationModal = async (boolean) => {
+    console.log('YOOOOOOOOOO')
+    await this.setState({ openSetConfirmationModal: boolean });
     console.log('this.state.openSetConfirmationModal : ', this.state.openSetConfirmationModal);
   };
-
-  handleCloseSetConfirmationModal = () => {
-    this.setState({ openSetConfirmationModal: false });
-  }
 
   render() {
     const {
@@ -142,8 +139,7 @@ class GamePage extends Component {
         <Table
           gameCards={gameCards}
           recordValue={this.recordValue}
-          handleOpenSetConfirmationModal={this.handleOpenSetConfirmationModal}
-          handleCloseSetConfirmationModal={this.handleCloseSetConfirmationModal}
+          handleSetConfirmationModal={this.handleSetConfirmationModal}
           openSetConfirmationModal={openSetConfirmationModal}
         />
         <GameTools
@@ -152,7 +148,7 @@ class GamePage extends Component {
           playerNames={finalPlayers}
           addThreeCards={this.addThreeCards}
           openAddThreeCardsModal={openAddThreeCardsModal}
-          handleCloseAddThreeCardsModal={this.handleCloseAddThreeCardsModal}
+          handleAddThreeCardsModal={this.handleAddThreeCardsModal}
           actualQuantityOfSets={actualQuantityOfSets}
         />
         <button onClick={this.restart}>Restart</button>

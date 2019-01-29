@@ -45,7 +45,7 @@ class PlayersPage extends Component {
 
   render() {
     const { numberOfPlayers, finalPlayers, redirect } = this.state;
-    console.log(typeof numberOfPlayers, finalPlayers)
+    // console.log(typeof numberOfPlayers, finalPlayers)
     if (redirect){
       return (<Redirect to={{
         pathname: "/game_page",
