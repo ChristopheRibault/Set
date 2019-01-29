@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import GameTools from "./GameTools/GameTools";
 import GameBoard from "./GameBoard/GameBoard";
+import Header from "./Header";
 import { Redirect } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
@@ -153,6 +154,9 @@ class GamePage extends Component {
     return (
       <div>
         <Grid container className={classes.root} spacing={16}>
+          <Grid item xs={12}>
+            <Header restart={this.restart}/>
+          </Grid>
           <Grid item xs={3}>
             <GameTools
               liftPlayingTime={this.liftPlayingTime}

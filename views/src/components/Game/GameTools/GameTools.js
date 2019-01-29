@@ -10,10 +10,11 @@ const styles = theme => ({
   control: {
     padding: theme.spacing.unit * 2
   },
-  gameToolsSection: {
-    border: '3px solid pink',
-    marginTop: 10,
-    marginBottom: 10,
+  gameTools: {
+    marginTop: 20
+  },
+  gameToolsElement: {
+    padding: 30
   }
 });
 
@@ -23,10 +24,20 @@ class GameTools extends Component {
     playingTime: false
   };
 
-  getNamePlayerPlaying = async (e) => {
+  getNamePlayerPlaying = async e => {
     this.props.liftPlayingTime(true);
-    await this.setState({playerNamePlaying: e.target.name, playingTime: true});
-    await setTimeout(()=>this.setState({playerNamePlaying: '', playingTime: false}, this.props.liftPlayingTime(false)), 8000);
+    await this.setState({
+      playerNamePlaying: e.target.name,
+      playingTime: true
+    });
+    await setTimeout(
+      () =>
+        this.setState(
+          { playerNamePlaying: "", playingTime: false },
+          this.props.liftPlayingTime(false)
+        ),
+      8000
+    );
   };
 
   render() {
@@ -37,26 +48,36 @@ class GameTools extends Component {
       openAddThreeCardsModal,
       handleAddThreeCardsModal,
       actualQuantityOfSets,
-      classes,
+      classes
     } = this.props;
 
+    console.log('playerNames : ', console.log(playerNames))
     return (
-      <div>
+      <div className={classes.gameTools}>
+      
         {playerNames.map((player, index) => {
           return (
-            <div key={index} className={classes.gameToolsSection}>
-            {player.player}: {player.name} <button onClick={this.getNamePlayerPlaying} className={playingTime ? "disabled" : "active"} name={player.name}>SET !</button>
+            <div key={index} className={classes.gameToolsElement}>
+              {player.name !== "" ? player.name : player.player} {"  "}
+              <button
+                onClick={this.getNamePlayerPlaying}
+                className={playingTime ? "disabled" : "active"}
+                name={player.name}
+              >
+                SET !
+              </button>
             </div>
           );
         })}
         {playingTime && <div>{playerNamePlaying} is playing !</div>}
-        <AddThreeCards
-          addThreeCards={addThreeCards}
-          openAddThreeCardsModal={openAddThreeCardsModal}
-          handleAddThreeCardsModal={handleAddThreeCardsModal}
-          actualQuantityOfSets={actualQuantityOfSets}
-          className={classes.gameToolsSection}
-        />
+        <div className={classes.gameToolsElement}>
+          <AddThreeCards
+            addThreeCards={addThreeCards}
+            openAddThreeCardsModal={openAddThreeCardsModal}
+            handleAddThreeCardsModal={handleAddThreeCardsModal}
+            actualQuantityOfSets={actualQuantityOfSets}
+          />
+        </div>
       </div>
     );
   }
