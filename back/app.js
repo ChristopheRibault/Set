@@ -16,6 +16,8 @@ app.use(morgan('dev'));
 
 app.use('/public', express.static('public'));
 
+app.use('/scores', require('./routes/scores'));
+
 app.route('/')
   .get(async (req, res) => {
     const result = await knex.select().table('cards');

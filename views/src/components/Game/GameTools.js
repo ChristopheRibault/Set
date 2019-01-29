@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import AddThreeCards from "./AddThreeCards";
 import "./GameTools.css";
 
 class GameTools extends Component {
   state = {
-    playerNamePlaying: '',
-    playingTime: false,
-  }
+    playerNamePlaying: "",
+    playingTime: false
+  };
 
   getNamePlayerPlaying = async (e) => {
     this.props.liftPlayingTime(true);
@@ -14,19 +15,33 @@ class GameTools extends Component {
   }
 
   render() {
-    const { playerNames } = this.props;
     const { playingTime, playerNamePlaying } = this.state;
+    const {
+      playerNames,
+      addThreeCards,
+      openAddThreeCardsModal,
+      handleCloseAddThreeCardsModal,
+      actualQuantityOfSets
+    } = this.props;
+
     return (
       <div>
-      {playerNames.map((player, index)=>{
-        return(
-      <div key={index}>
-        {player.player}: {player.name} <button onClick={this.getNamePlayerPlaying} className={playingTime ? "disabled" : "active"} name={player.name}>SET !</button>
+        {playerNames.map((player, index) => {
+          return (
+            <div key={index}>
+            {player.player}: {player.name} <button onClick={this.getNamePlayerPlaying} className={playingTime ? "disabled" : "active"} name={player.name}>SET !</button>
+            </div>
+          );
+        })}
+        {playingTime && <div>{playerNamePlaying} is playing !</div>}
+        <AddThreeCards
+          addThreeCards={addThreeCards}
+          openAddThreeCardsModal={openAddThreeCardsModal}
+          handleCloseAddThreeCardsModal={handleCloseAddThreeCardsModal}
+          actualQuantityOfSets={actualQuantityOfSets}
+        />
       </div>
-      )})}
-      {playingTime && <div>{playerNamePlaying} is playing !</div>}
-      </div>
-    )
+    );
   }
 }
 
