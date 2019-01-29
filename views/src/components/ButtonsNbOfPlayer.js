@@ -43,25 +43,57 @@ const styles = theme => ({
   },
 });
 
-const ButtonNbOfPlayer = (props) => {
-  const { classes } = props;
-
+const ButtonsNbOfPlayer = (props) => {
+  const { classes, selectPlayer, value } = props;
+  console.log(value);
   return (
     <div>
       <Button
+        value={1}
         variant="contained"
         color="primary"
         disableRipple
         className={classNames(classes.margin, classes.bootstrapRoot)}
+        onClick={() => selectPlayer(1)}
       >
-        Nombre
+        1
+      </Button>
+      <Button
+        value={2}
+        variant="contained"
+        color="primary"
+        disableRipple
+        className={classNames(classes.margin, classes.bootstrapRoot)}
+        onClick={() => selectPlayer(2)}
+      >
+        2
+      </Button>
+      <Button
+        value={3}
+        variant="contained"
+        color="primary"
+        disableRipple
+        className={classNames(classes.margin, classes.bootstrapRoot)}
+        onClick={() => selectPlayer(3)}
+      >
+        3
+      </Button>
+      <Button
+        value={4}
+        variant="contained"
+        color="primary"
+        disableRipple
+        className={classNames(classes.margin, classes.bootstrapRoot)}
+        onClick={() => selectPlayer(4)}
+      >
+        4
       </Button>
     </div>
   );
 }
 
-ButtonNbOfPlayer.propTypes = {
+ButtonsNbOfPlayer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonNbOfPlayer);
+export default withStyles(styles)(ButtonsNbOfPlayer);
