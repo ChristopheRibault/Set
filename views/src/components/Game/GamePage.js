@@ -10,6 +10,7 @@ class GamePage extends Component {
     allCards: [],
     gameCards: [],
     selectedCards: [],
+    playingTime: false,
     actualQuantityOfSets: 0,
     openAddThreeCardsModal: false,
     redirect: false,
@@ -24,7 +25,11 @@ class GamePage extends Component {
     this.setState({ gameCards: twelve });
   }
 
-  selectThreeCards = async card => {
+  liftPlayingTime = (isPlaying) => {
+    this.setState({playingTime: isPlaying})
+  }
+
+  selectThreeCards = async (card) => {
     const { selectedCards } = this.state;
     console.log(card);
     selectedCards.push(card);
@@ -42,20 +47,20 @@ class GamePage extends Component {
   };
 
   giveMeThreeCards = () => {
-    const three = this.state.allCards.splice(0, 3);
-    this.state.gameCards.push(three[0], three[1], three[2]);
-    this.setState({ gameCards: this.state.gameCards });
-    // }
+      const three = this.state.allCards.splice(0, 3);
+      this.state.gameCards.push(three[0], three[1], three[2]);
+      this.setState({ gameCards: this.state.gameCards });
   };
 
   recordValue = async card => {
-    const { selectedCards } = this.state;
-    this.selectThreeCards(card);
+    if (this.state.playingTime) {
+      const { selectedCards } = this.state;
+      this.selectThreeCards(card)
 
-    if (selectedCards.length === 3) {
-      const res = await axios.post("http://localhost:5000/checkSet", {
-        cards: selectedCards
-      });
+      if (selectedCards.length === 3) {
+        const res = await axios.post("http://localhost:5000/checkSet", {
+          cards: this.state.selectedCards
+        });
 
       if (res.data && this.state.gameCards.length < 13) {
         this.removeThreeCards();
@@ -66,6 +71,9 @@ class GamePage extends Component {
         console.log("pas bon !");
       }
       this.setState({ selectedCards: [] });
+      }
+    }  else {
+      alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
     }
   };
 
@@ -139,6 +147,7 @@ class GamePage extends Component {
           openSetConfirmationModal={openSetConfirmationModal}
         />
         <GameTools
+          liftPlayingTime={this.liftPlayingTime}
           numberOfPlayers={numberOfPlayers}
           playerNames={finalPlayers}
           addThreeCards={this.addThreeCards}
