@@ -27,9 +27,9 @@ class GamePage extends Component {
     openAddThreeCardsModal: false,
     redirect: false,
     openSetConfirmationModal: false,
-    validityOfSet: '',
-    playerNamePlaying: '',
-    players: this.props.location.props.finalPlayers,
+    validityOfSet: "",
+    playerNamePlaying: "",
+    players: this.props.location.props.finalPlayers
   };
 
   async componentDidMount() {
@@ -69,16 +69,16 @@ class GamePage extends Component {
   addScore = () => {
     const { players } = this.state;
     players.forEach(player => {
-      if(this.state.playerNamePlaying === player.name){
-        player.score += 1
+      if (this.state.playerNamePlaying === player.name) {
+        player.score += 1;
       }
-    this.setState({players})
+      this.setState({ players });
     });
-  }
+  };
 
-  liftGettingPlayerNamePlaying = (playerName) => {
-    this.setState({playerNamePlaying: playerName})
-  }
+  liftGettingPlayerNamePlaying = playerName => {
+    this.setState({ playerNamePlaying: playerName });
+  };
 
   recordValue = async card => {
     if (this.state.playingTime) {
@@ -93,16 +93,16 @@ class GamePage extends Component {
         if (res.data && this.state.gameCards.length < 13) {
           this.removeThreeCards();
           this.giveMeThreeCards();
-          this.handleSetConfirmationModal(true, true);
+          this.handleSetConfirmationModal(true);
           this.addScore();
           console.log("set !");
         } else if (res.data && this.state.gameCards.length > 13) {
           this.removeThreeCards();
-          this.handleSetConfirmationModal(true, true);
+          this.handleSetConfirmationModal(true);
           this.addScore();
           console.log("set !");
         } else {
-          this.handleSetConfirmationModal(true, false);
+          this.handleSetConfirmationModal(false);
           console.log("pas bon !");
         }
         this.setState({ selectedCards: [] });
@@ -116,7 +116,7 @@ class GamePage extends Component {
     const set = await axios.post("http://localhost:5000/checkGame", {
       cards: this.state.gameCards
     });
-    console.log(set);
+    console.log(set.data.sets);
     await this.setState({ actualQuantityOfSets: set.data.quantityOfSets });
   };
 
@@ -138,8 +138,20 @@ class GamePage extends Component {
     this.setState({ redirect: true });
   };
 
-  handleSetConfirmationModal = async (booleanOpenModal, booleanSetIsValid) => {
-    await this.setState({ openSetConfirmationModal: booleanOpenModal, validityOfSet: booleanSetIsValid});
+  handleSetConfirmationModal = (booleanSetIsValid) => {
+      this.setState({
+        openSetConfirmationModal: true,
+        validityOfSet: booleanSetIsValid
+      });
+    setTimeout(
+      () =>
+        this.setState({
+          openSetConfirmationModal: false,
+        }),
+      2000
+    );
+
+    // await this.setState({ openSetConfirmationModal: booleanOpenModal, validityOfSet: booleanSetIsValid});
   };
 
   render() {
@@ -175,7 +187,7 @@ class GamePage extends Component {
       <div>
         <Grid container className={classes.root} spacing={16}>
           <Grid item xs={12}>
-            <Header restart={this.restart}/>
+            <Header restart={this.restart} />
           </Grid>
           <Grid item xs={3}>
             <GameTools
@@ -193,7 +205,6 @@ class GamePage extends Component {
             <GameBoard
               gameCards={gameCards}
               recordValue={this.recordValue}
-              handleSetConfirmationModal={this.handleSetConfirmationModal}
               openSetConfirmationModal={openSetConfirmationModal}
               validityOfSet={validityOfSet}
               restart={this.restart}

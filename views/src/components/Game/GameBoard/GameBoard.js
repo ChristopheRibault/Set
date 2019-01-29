@@ -28,7 +28,6 @@ const GameBoard = props => {
     recordValue,
     gameCards,
     openSetConfirmationModal,
-    handleSetConfirmationModal,
     validityOfSet,
     // restart,
     classes
@@ -39,7 +38,6 @@ const GameBoard = props => {
       <Table
         gameCards={gameCards}
         recordValue={recordValue}
-        handleSetConfirmationModal={handleSetConfirmationModal}
         openSetConfirmationModal={openSetConfirmationModal}
         validityOfSet={validityOfSet}
         className={classes.table}
