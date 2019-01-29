@@ -26,7 +26,8 @@ class GamePage extends Component {
     actualQuantityOfSets: 0,
     openAddThreeCardsModal: false,
     redirect: false,
-    openSetConfirmationModal: false
+    openSetConfirmationModal: false,
+    validityOfSet: '',
   };
 
   async componentDidMount() {
@@ -77,9 +78,10 @@ class GamePage extends Component {
         if (res.data && this.state.gameCards.length < 13) {
           this.removeThreeCards();
           this.giveMeThreeCards();
-          this.handleSetConfirmationModal(true);
+          this.handleSetConfirmationModal(true, true);
           console.log("set !");
         } else {
+          this.handleSetConfirmationModal(true, false);
           console.log("pas bon !");
         }
         this.setState({ selectedCards: [] });
@@ -115,13 +117,10 @@ class GamePage extends Component {
     this.setState({ redirect: true });
   };
 
-  handleSetConfirmationModal = async boolean => {
+  handleSetConfirmationModal = async (booleanOpenModal, booleanSetIsValid) => {
     console.log("YOOOOOOOOOO");
-    await this.setState({ openSetConfirmationModal: boolean });
-    console.log(
-      "this.state.openSetConfirmationModal : ",
-      this.state.openSetConfirmationModal
-    );
+    await this.setState({ openSetConfirmationModal: booleanOpenModal, validityOfSet: booleanSetIsValid});
+    console.log('openSetConfirmationModal : ', this.state.openSetConfirmationModal, 'validityOfSet : ', this.state.validityOfSet)
   };
 
   render() {
@@ -129,6 +128,7 @@ class GamePage extends Component {
       gameCards,
       openAddThreeCardsModal,
       openSetConfirmationModal,
+      validityOfSet,
       actualQuantityOfSets,
       redirect
     } = this.state;
@@ -174,6 +174,7 @@ class GamePage extends Component {
               recordValue={this.recordValue}
               handleSetConfirmationModal={this.handleSetConfirmationModal}
               openSetConfirmationModal={openSetConfirmationModal}
+              validityOfSet={validityOfSet}
               restart={this.restart}
             />
           </Grid>

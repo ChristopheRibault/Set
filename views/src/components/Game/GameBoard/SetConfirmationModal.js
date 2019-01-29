@@ -19,8 +19,14 @@ class SetConfirmationModal extends React.Component {
   };
 
   render() {
-    const { openSetConfirmationModal, handleSetConfirmationModal } = this.props;
+    const { openSetConfirmationModal, handleSetConfirmationModal, validityOfSet } = this.props;
+    // if (validityOfSet === true) {
+    //   console.log('well done!')
+    // } else if (validityOfSet === false) {
+    //   console.log('bouhou...')
+    // }
     return (
+
       <div>
         <Dialog
           open={openSetConfirmationModal}
@@ -31,11 +37,11 @@ class SetConfirmationModal extends React.Component {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title">
-            Well done!
+          {validityOfSet === true ? 'Welldone!' : 'Nope! Try again!'}
           </DialogTitle>
           <DialogActions>
             <Button onClick={() => handleSetConfirmationModal(false)} color="primary">
-              Thanks bro!
+            {validityOfSet === true ? 'Thanks bro!' : 'Ok bro'}
             </Button>
           </DialogActions>
         </Dialog>
