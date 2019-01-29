@@ -31,7 +31,7 @@ const GameBoard = props => {
     handleSetConfirmationModal,
     validityOfSet,
     // restart,
-    classes
+    classes,
   } = props;
 
   return (
