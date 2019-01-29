@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Table from "./Table";
-import GameTools from "./GameTools";
+import GameTools from "./GameTools/GameTools";
+import GameBoard from "./GameBoard/GameBoard";
 import { Redirect } from "react-router-dom";
 
 class GamePage extends Component {
@@ -136,7 +136,7 @@ class GamePage extends Component {
 
     return (
       <div>
-        <Table
+        <GameBoard
           gameCards={gameCards}
           recordValue={this.recordValue}
           handleSetConfirmationModal={this.handleSetConfirmationModal}
