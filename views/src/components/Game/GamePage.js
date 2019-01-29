@@ -81,33 +81,36 @@ class GamePage extends Component {
     this.setState({ playerNamePlaying: playerName });
   };
 
-  recordValue = async card => {
+  recordValue = async (card) => {
+    const { selectedCards} = this.state;
     if (this.state.playingTime) {
-      const { selectedCards } = this.state;
       this.selectThreeCards(card);
+      selectedCards.forEach(cardClicked => {
+        if(card.code === cardClicked.code){
+          cardClicked.select = true;
+        }
+      });
 
       if (selectedCards.length === 3) {
         const res = await axios.post("http://localhost:5000/checkSet", {
           cards: this.state.selectedCards
         });
 
-        if (res.data && this.state.gameCards.length < 13) {
-          this.removeThreeCards();
-          this.giveMeThreeCards();
-          this.handleSetConfirmationModal(true);
-          this.addScore();
-        } else if (res.data && this.state.gameCards.length > 13) {
+        if (res.data) {
           this.removeThreeCards();
           this.handleSetConfirmationModal(true);
           this.addScore();
+          if(this.state.gameCards.length < 13){
+            this.giveMeThreeCards();
+          }
         } else {
           this.handleSetConfirmationModal(false);
         }
         this.setState({ selectedCards: [] });
       }
     } else {
-      alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
-    }
+        alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
+      }
   };
 
   checkGame = async () => {
@@ -148,6 +151,10 @@ class GamePage extends Component {
         }),
       2000
     );
+    const { selectedCards} = this.state;
+    selectedCards.forEach(cardClicked => {
+        cardClicked.select = false;
+    })
   };
 
   render() {
@@ -161,7 +168,6 @@ class GamePage extends Component {
       players,
       allCards,
     } = this.state;
-
     const { classes } = this.props;
 
     const { numberOfPlayers, finalPlayers } = this.props.location.props;

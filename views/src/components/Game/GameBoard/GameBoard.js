@@ -16,7 +16,7 @@ const GameBoard = props => {
     openSetConfirmationModal,
     validityOfSet,
     // restart,
-    classes
+    classes,
   } = props;
 
   return (

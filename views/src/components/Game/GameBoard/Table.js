@@ -24,6 +24,7 @@ const Table = (props) => {
     openSetConfirmationModal,
     validityOfSet,
   } = props;
+
   return (
     <div>
       <Grid container className={classes.root} spacing={16}>
