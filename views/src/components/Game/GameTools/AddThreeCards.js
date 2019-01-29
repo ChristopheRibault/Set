@@ -16,7 +16,12 @@ const styles = theme => ({
 class AddThreeCards extends Component {
 
   render() {
-    const { addThreeCards, openAddThreeCardsModal, handleAddThreeCardsModal, actualQuantityOfSets } = this.props;  
+    const {
+      addThreeCards,
+      openAddThreeCardsModal,
+      handleAddThreeCardsModal,
+      actualQuantityOfSets
+    } = this.props;
 
     return (
       <div>
@@ -30,7 +35,7 @@ class AddThreeCards extends Component {
     );
 
   }
-  
+
 };
 
 export default withStyles(styles)(AddThreeCards);

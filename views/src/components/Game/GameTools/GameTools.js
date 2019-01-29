@@ -25,12 +25,12 @@ class GameTools extends Component {
   };
 
   getNamePlayerPlaying = async e => {
-    console.log('e : ', e)
     this.props.liftPlayingTime(true);
     await this.setState({
       playerNamePlaying: e,
       playingTime: true
     });
+    await this.props.liftGettingPlayerNamePlaying(this.state.playerNamePlaying);
     await setTimeout(
       () =>
         this.setState(
@@ -43,7 +43,6 @@ class GameTools extends Component {
 
   render() {
     const { playingTime, playerNamePlaying } = this.state;
-    console.log('playerNamePlaying : ', playerNamePlaying)
     const {
       playerNames,
       addThreeCards,
@@ -55,11 +54,10 @@ class GameTools extends Component {
 
     return (
       <div className={classes.gameTools}>
-      
         {playerNames.map((player, index) => {
           return (
             <div key={index} className={classes.gameToolsElement}>
-              {player.name !== "" ? player.name : player.player} {"  "}
+              {player.name !== "" ? player.name : player.player} Score: {player.score}{"  "}
               <button
                 onClick={() => this.getNamePlayerPlaying(player.name !== "" ? player.name : player.player)}
                 className={playingTime ? "disabled" : "active"}
