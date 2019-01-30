@@ -43,7 +43,7 @@ class GameTools extends Component {
           { playerNamePlaying: "", playingTime: false },
           this.props.liftPlayingTime(false)
         ),
-      7000
+      4000
     );
   };
 
