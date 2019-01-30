@@ -62,9 +62,14 @@ class GamePage extends Component {
   };
 
   giveMeThreeCards = () => {
-    const three = this.state.allCards.splice(0, 3);
-    this.state.gameCards.push(three[0], three[1], three[2]);
-    this.setState({ gameCards: this.state.gameCards });
+    if (this.state.allCards.length > 2) {
+      const three = this.state.allCards.splice(0, 3);
+      this.state.gameCards.push(three[0], three[1], three[2]);
+      this.setState({ gameCards: this.state.gameCards });
+    }
+    else{
+      this.handleSetConfirmationModal(false);
+    }
   };
 
   addScore = () => {
@@ -96,7 +101,7 @@ class GamePage extends Component {
           cards: this.state.selectedCards
         });
 
-        if (res.data) {
+        if (!res.data) {
           this.removeThreeCards();
           this.handleSetConfirmationModal(true);
           this.addScore();
