@@ -1,0 +1,36 @@
+.Card {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 130px;
+  width: 96px;
+  border : 1px grey solid;
+  border-radius: 10px;
+  margin: 5px;
+  box-shadow: 3px 3px 5px grey;
+  cursor: pointer;
+}
+
+.Card:hover {
+  background-color: gainsboro;
+}
+
+.Card img {
+  margin: 5px;
+}
+
+.contour {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 130px;
+  width: 96px;
+  border : 1px grey solid;
+  border-radius: 10px;
+  margin: 5px;
+  box-shadow: 3px 3px 5px grey;
+  cursor: pointer;
+  border: 2px solid red;
+}

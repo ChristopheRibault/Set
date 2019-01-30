@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe');
+
+.backgroundIntroduction{
+  text-align: center;
+  font-family: 'ZCOOL KuaiLe', cursive;
+  font-size: 40px;
+}
+
+.introductionPage {
+  background-image: url("https://www.randolph.ca/wp-content/uploads/2016/12/SETboxright_0-1.png");
+  background-repeat:no-repeat;
+  background-position:50% 12%;
+}
+.buttonStartIntro{
+  display: block;
+  margin: auto;
+  margin-top: 80vh;
+}
