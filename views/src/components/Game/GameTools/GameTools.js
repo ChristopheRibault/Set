@@ -30,7 +30,7 @@ class GameTools extends Component {
     playingTime: false
   };
 
-  getNamePlayerPlaying = async e => {
+  beginningOfPlayingTime = async e => {
     this.props.liftPlayingTime(true);
     await this.setState({
       playerNamePlaying: e,
@@ -38,14 +38,22 @@ class GameTools extends Component {
     });
     await this.props.liftGettingPlayerNamePlaying(this.state.playerNamePlaying);
     await setTimeout(
-      () =>
-        this.setState(
-          { playerNamePlaying: "", playingTime: false },
-          this.props.liftPlayingTime(false)
-        ),
-      7000
+      () => this.endOfPlayingTime(), 7000
     );
   };
+
+
+
+  endOfPlayingTime = () => {
+    this.setState(
+      { playerNamePlaying: "", playingTime: false },
+      this.props.liftPlayingTime(false)
+    );
+    this.props.gameCards.forEach(card => {
+      card.select = false;
+    });
+    this.props.liftGameCards(this.props.gameCards)
+  }
 
   render() {
     const { playingTime, playerNamePlaying } = this.state;
@@ -55,7 +63,7 @@ class GameTools extends Component {
       openAddThreeCardsModal,
       handleAddThreeCardsModal,
       actualQuantityOfSets,
-      classes
+      classes,
     } = this.props;
 
     return (
@@ -68,7 +76,7 @@ class GameTools extends Component {
               <br />
               <Button
                 onClick={() =>
-                  this.getNamePlayerPlaying(
+                  this.beginningOfPlayingTime(
                     player.name !== "" ? player.name : player.player
                   )
                 }

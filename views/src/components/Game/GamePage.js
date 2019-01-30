@@ -45,6 +45,11 @@ class GamePage extends Component {
     this.setState({ playingTime: isPlaying });
   };
 
+  liftGameCards = (gameCards) => {
+    this.setState({ gameCards: gameCards})
+    console.log("============GAMEPAGE============", this.state.gameCards)
+  }
+
   selectThreeCards = async card => {
     const { selectedCards } = this.state;
     selectedCards.push(card);
@@ -82,7 +87,7 @@ class GamePage extends Component {
   };
 
   recordValue = async (card) => {
-    const { selectedCards} = this.state;
+    const { selectedCards, gameCards } = this.state;
     if (this.state.playingTime) {
       this.selectThreeCards(card);
       selectedCards.forEach(cardClicked => {
@@ -194,6 +199,7 @@ class GamePage extends Component {
           </Grid>
           <Grid item xs={2} className={classes.gameTools}>
             <GameTools
+              gameCards={gameCards}
               liftPlayingTime={this.liftPlayingTime}
               numberOfPlayers={numberOfPlayers}
               playerNames={players}
@@ -202,6 +208,8 @@ class GamePage extends Component {
               handleAddThreeCardsModal={this.handleAddThreeCardsModal}
               actualQuantityOfSets={actualQuantityOfSets}
               liftGettingPlayerNamePlaying={this.liftGettingPlayerNamePlaying}
+              liftGameCards={this.liftGameCards}
+
             />
           </Grid>
           <Grid item xs={10}>
