@@ -87,7 +87,7 @@ class GamePage extends Component {
   };
 
   recordValue = async (card) => {
-    const { selectedCards, gameCards } = this.state;
+    const { selectedCards } = this.state;
     if (this.state.playingTime) {
       this.selectThreeCards(card);
       selectedCards.forEach(cardClicked => {
@@ -114,6 +114,7 @@ class GamePage extends Component {
         this.setState({ selectedCards: [] });
       }
     } else {
+        this.setState({ selectedCards: [] })
         alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
       }
   };
