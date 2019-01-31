@@ -106,7 +106,7 @@ class GamePage extends Component {
           cards: this.state.selectedCards
         });
 
-        if (!res.data) {
+        if (res.data) {
           this.removeThreeCards();
           this.handleSetConfirmationModal(true);
           this.addScore();
