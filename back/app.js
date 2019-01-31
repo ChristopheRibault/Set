@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const knex = require('./db/knex');
+const path = require('path');
 const port = process.env.PORT || 5000;
 const shuffle = require('./helpers/shuffle');
 const checkSet = require('./helpers/checkSet');
@@ -14,9 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-app.use('/public', express.static('public'));
-app.use('/', express.static('../views/build'));
+app.use('/', express.static(path.join(__dirname, '..', '/views/build')));
 
+app.use('/public', express.static('public'));
 app.use('/scores', require('./routes/scores'));
 
 app.route('/api')
