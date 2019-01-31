@@ -45,6 +45,11 @@ class GamePage extends Component {
     this.setState({ playingTime: isPlaying });
   };
 
+  liftGameCards = (gameCards) => {
+    this.setState({ gameCards: gameCards})
+    console.log("============GAMEPAGE============", this.state.gameCards)
+  }
+
   selectThreeCards = async card => {
     const { selectedCards } = this.state;
     selectedCards.push(card);
@@ -62,9 +67,14 @@ class GamePage extends Component {
   };
 
   giveMeThreeCards = () => {
-    const three = this.state.allCards.splice(0, 3);
-    this.state.gameCards.push(three[0], three[1], three[2]);
-    this.setState({ gameCards: this.state.gameCards });
+    if (this.state.allCards.length > 2) {
+      const three = this.state.allCards.splice(0, 3);
+      this.state.gameCards.push(three[0], three[1], three[2]);
+      this.setState({ gameCards: this.state.gameCards });
+    }
+    else{
+      this.handleSetConfirmationModal(false);
+    }
   };
 
   addScore = () => {
@@ -82,7 +92,7 @@ class GamePage extends Component {
   };
 
   recordValue = async (card) => {
-    const { selectedCards} = this.state;
+    const { selectedCards } = this.state;
     if (this.state.playingTime) {
       this.selectThreeCards(card);
       selectedCards.forEach(cardClicked => {
@@ -96,7 +106,7 @@ class GamePage extends Component {
           cards: this.state.selectedCards
         });
 
-        if (res.data) {
+        if (!res.data) {
           this.removeThreeCards();
           this.handleSetConfirmationModal(true);
           this.addScore();
@@ -109,6 +119,7 @@ class GamePage extends Component {
         this.setState({ selectedCards: [] });
       }
     } else {
+        this.setState({ selectedCards: [] })
         alert('Cliquez d\'abord sur le joueur qui a dit "Set"');
       }
   };
@@ -194,6 +205,7 @@ class GamePage extends Component {
           </Grid>
           <Grid item xs={2} className={classes.gameTools}>
             <GameTools
+              gameCards={gameCards}
               liftPlayingTime={this.liftPlayingTime}
               numberOfPlayers={numberOfPlayers}
               playerNames={players}
@@ -202,6 +214,8 @@ class GamePage extends Component {
               handleAddThreeCardsModal={this.handleAddThreeCardsModal}
               actualQuantityOfSets={actualQuantityOfSets}
               liftGettingPlayerNamePlaying={this.liftGettingPlayerNamePlaying}
+              liftGameCards={this.liftGameCards}
+
             />
           </Grid>
           <Grid item xs={10}>
