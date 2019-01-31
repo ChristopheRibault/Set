@@ -34,7 +34,7 @@ class GamePage extends Component {
   };
 
   async componentDidMount() {
-    const deck = await axios.get("http://localhost:5000/api");
+    const deck = await axios.get("/api");
     await this.setState({ allCards: deck.data, deckLoaded: true });
     const { allCards } = this.state;
     const twelve = allCards.splice(0, 12);
@@ -102,7 +102,7 @@ class GamePage extends Component {
       });
 
       if (selectedCards.length === 3) {
-        const res = await axios.post("http://localhost:5000/api/checkSet", {
+        const res = await axios.post("/api/checkSet", {
           cards: this.state.selectedCards
         });
 
@@ -125,7 +125,7 @@ class GamePage extends Component {
   };
 
   checkGame = async () => {
-    const set = await axios.post("http://localhost:5000/api/checkGame", {
+    const set = await axios.post("/api/checkGame", {
       cards: this.state.gameCards
     });
     console.log(set.data.sets);
