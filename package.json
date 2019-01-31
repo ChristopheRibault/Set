@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurently \"cd back && npm i && node app\" \"cd views && npm i && npm start\"",
+    "start": "concurrently \"cd back && npm i && node app\" \"cd views && npm i && npm start\"",
   },
   "author": "",
   "license": "ISC",
