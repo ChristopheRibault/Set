@@ -17,6 +17,13 @@ const styles = theme => ({
     opacity: 0.65,
     cursor: "not-allowed",
     marginTop: 7,
+    color: 'white',
+    border: '1px solid white',
+    backgroundColor: "white",
+    "&:hover": {
+        backgroundColor: "white",
+        border: '1px solid white',
+    }
   },
   active: {
     margin: theme.spacing.unit,
@@ -90,7 +97,7 @@ class GameTools extends Component {
             </div>
           );
         })}
-        {playingTime && <div>{playerNamePlaying} is playing !</div>}
+        <h3>{playingTime && <div>{playerNamePlaying} is playing !</div>}</h3>
         <div className={classes.gameToolsElement}>
           <AddThreeCards
             addThreeCards={addThreeCards}
