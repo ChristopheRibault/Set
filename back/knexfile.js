@@ -22,8 +22,8 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'Set',
-      user:     '',
+      database: 'd2brm1hebdiviq',
+      user:     'wskyglevrpwdlm',
       password: process.env.DB_PASS,
     },
     migrations: {
