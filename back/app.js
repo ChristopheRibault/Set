@@ -15,23 +15,24 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use('/public', express.static('public'));
+app.use(express.static('../views/build'));
 
 app.use('/scores', require('./routes/scores'));
 
-app.route('/')
+app.route('/api')
   .get(async (req, res) => {
     const result = await knex.select().table('cards');
     const deck = shuffle(result);
     res.status(200).send(deck);
   });
 
-app.route('/checkSet')
+app.route('/api/checkSet')
   .post((req, res) => {
     const {cards} = req.body;
     res.status(200).send(checkSet(cards));
   })
 
-app.route('/checkGame')
+app.route('/api/checkGame')
   .post((req, res) => {
     const { cards } = req.body;
     const sets = checkGame(cards);
