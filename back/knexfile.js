@@ -20,8 +20,9 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
+      host: 'ec2-54-228-212-134.eu-west-1.compute.amazonaws.com',
       database: 'd2brm1hebdiviq',
       user:     'wskyglevrpwdlm',
       password: process.env.DB_PASS,
