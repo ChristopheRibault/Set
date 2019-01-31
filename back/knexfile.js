@@ -22,6 +22,7 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
+      host: 'ec2-54-228-212-134.eu-west-1.compute.amazonaws.com',
       database: 'd2brm1hebdiviq',
       user:     'wskyglevrpwdlm',
       port:     5432,
