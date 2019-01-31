@@ -24,6 +24,7 @@ module.exports = {
     connection: {
       database: 'd2brm1hebdiviq',
       user:     'wskyglevrpwdlm',
+      port:     5432,
       password: '7465188c2d189112cfd1abba113a493ec85995ecdb2cd190a61d21732db499ef',
     },
     migrations: {
