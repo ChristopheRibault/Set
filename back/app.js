@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use('/public', express.static('public'));
-app.use(express.static('../views/build'));
+app.use('/', express.static('../views/build'));
 
 app.use('/scores', require('./routes/scores'));
 
