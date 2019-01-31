@@ -17,6 +17,13 @@ const styles = theme => ({
     opacity: 0.65,
     cursor: "not-allowed",
     marginTop: 7,
+    color: 'white',
+    border: '1px solid white',
+    backgroundColor: "white",
+    "&:hover": {
+        backgroundColor: "white",
+        border: '1px solid white',
+    }
   },
   active: {
     margin: theme.spacing.unit,
@@ -30,7 +37,7 @@ class GameTools extends Component {
     playingTime: false
   };
 
-  getNamePlayerPlaying = async e => {
+  beginningOfPlayingTime = async e => {
     this.props.liftPlayingTime(true);
     await this.setState({
       playerNamePlaying: e,
@@ -38,14 +45,22 @@ class GameTools extends Component {
     });
     await this.props.liftGettingPlayerNamePlaying(this.state.playerNamePlaying);
     await setTimeout(
-      () =>
-        this.setState(
-          { playerNamePlaying: "", playingTime: false },
-          this.props.liftPlayingTime(false)
-        ),
-      7000
+      () => this.endOfPlayingTime(), 7000
     );
   };
+
+
+
+  endOfPlayingTime = () => {
+    this.setState(
+      { playerNamePlaying: "", playingTime: false },
+      this.props.liftPlayingTime(false)
+    );
+    this.props.gameCards.forEach(card => {
+      card.select = false;
+    });
+    this.props.liftGameCards(this.props.gameCards)
+  }
 
   render() {
     const { playingTime, playerNamePlaying } = this.state;
@@ -55,7 +70,7 @@ class GameTools extends Component {
       openAddThreeCardsModal,
       handleAddThreeCardsModal,
       actualQuantityOfSets,
-      classes
+      classes,
     } = this.props;
 
     return (
@@ -68,7 +83,7 @@ class GameTools extends Component {
               <br />
               <Button
                 onClick={() =>
-                  this.getNamePlayerPlaying(
+                  this.beginningOfPlayingTime(
                     player.name !== "" ? player.name : player.player
                   )
                 }
@@ -82,7 +97,7 @@ class GameTools extends Component {
             </div>
           );
         })}
-        {playingTime && <div>{playerNamePlaying} is playing !</div>}
+        <h3>{playingTime && <div>{playerNamePlaying} is playing !</div>}</h3>
         <div className={classes.gameToolsElement}>
           <AddThreeCards
             addThreeCards={addThreeCards}

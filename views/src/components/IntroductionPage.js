@@ -12,7 +12,7 @@ const styles = theme => ({
   buttonStartIntro: {
     display: 'block',
     margin: 'auto',
-    marginTop: '80vh',
+    marginTop: '85vh',
   },
   input: {
     display: 'none',

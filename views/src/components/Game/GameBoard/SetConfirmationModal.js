@@ -36,7 +36,7 @@ class SetConfirmationModal extends React.Component {
           aria-describedby="alert-dialog-slide-description"
         >
           <DialogTitle id="alert-dialog-slide-title" className={classes.confirmationMessage}>
-          {validityOfSet === true ? 'Welldone!' : 'Nope! Try again!'}
+          {validityOfSet === true ? 'Well done!' : 'Nope! Try again!'}
           </DialogTitle>
         </Dialog>
       </div>
