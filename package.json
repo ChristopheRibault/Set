@@ -1,19 +1,14 @@
 {
-  "name": "back",
+  "name": "set",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd back && npm i && node app\" \"cd views && npm i && npm start\"",
+    "start": "concurrently \"cd back && npm i && node app.js\" \"cd views && npm i && npm start\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.5",
-    "dotenv": "^6.2.0",
-    "express": "^4.16.4",
-    "knex": "^0.16.3",
-    "morgan": "^1.9.1"
+    "concurrently": "^4.1.0",
   }
 }
